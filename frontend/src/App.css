@@ -1,0 +1,73 @@
+.gradient-bg {
+    height: 100vh; 
+    /* Light one */
+    /* background: linear-gradient(135deg, #adc6eb, #f18ea3, #957ecd, #e7d27e); */
+    /* Dark one */
+    background: linear-gradient(135deg, #8DB3E4, #EC6885, #8167C4, #E3CA65);
+  }
+
+/* General Button Style */
+ .button {
+    font-weight: bold !important;
+    text-transform: uppercase;
+    font-size: 1rem;
+    padding: 10px 20px !important;
+    border-radius: 30px !important;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Add Item Button */
+  .add-item {
+    background: linear-gradient(135deg, #e9496c, #E3CA65);
+    box-shadow: 0 4px 15px rgba(236, 104, 133, 0.5);
+  }
+  
+  .add-item:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #E3CA65, #e9496c);
+    box-shadow: 0 6px 20px rgba(236, 104, 133, 0.6);
+  }
+  
+  .add-item:active {
+    transform: scale(0.95);
+  }
+  
+  /* Delete Button */
+  .delete-item {
+    background: linear-gradient(135deg, #EC6885, #8167C4);
+    box-shadow: 0 4px 15px rgba(236, 104, 133, 0.5);
+  }
+  
+  .delete-item:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #8167C4, #EC6885);
+    box-shadow: 0 6px 20px rgba(236, 104, 133, 0.6);
+  }
+  
+  /* Edit Button */
+  .edit-item {
+    background: linear-gradient(135deg, #8DB3E4, #8167C4);
+    box-shadow: 0 4px 15px rgba(129, 103, 196, 0.5);
+  }
+  
+  .edit-item:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #8167C4, #8DB3E4);
+    box-shadow: 0 6px 20px rgba(129, 103, 196, 0.6);
+  }
+  
+  /* Confirm Button */
+  .confirm-item {
+    background: linear-gradient(135deg, #E3CA65, #8DB3E4);
+    box-shadow: 0 4px 15px rgba(227, 202, 101, 0.5);
+  }
+  
+  .confirm-item:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #8DB3E4, #E3CA65);
+    box-shadow: 0 6px 20px rgba(227, 202, 101, 0.6);
+  }
+  

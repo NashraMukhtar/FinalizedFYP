@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Select from 'react-select';
 import {
   Container,
+  Box,
   Typography,
   TextField,
   Button,
@@ -116,101 +117,117 @@ const GroceryList = () => {
       handleCloseDialog();  // Close the dialog after deletion
   };
 
+
     if (loading || ingredientLoading) return <div style={{marginTop:'15%',marginLeft:'45%',fontSize:'larger', fontWeight:'bolder'}}>Loading...</div>;
 
     return (
       <Container
-      maxWidth="md"
+      maxWidth="false"
+      className='gradient-bg'
       style={{
-        backgroundColor: '#A7DFC1',
-        padding: '30px',
-        borderRadius: '10px',
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-        marginTop: '50px',
-        width: '100%',
+        margin: '-8px',
+        // boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
       }}
     >
       {/* <Navbar /> */}
       <ToastContainer 
        autoClose={2000}
       />
-      <Typography variant="h4" style={{ textAlign: 'center', fontWeight: 'bold', color: '#333' }}>
+      <Typography variant="h2"sx={{
+        fontFamily: "'Luckiest Guy', static",
+        color: "#ffffff",
+        marginTop: "8%",
+        width: "100%",
+        textAlign: "center",
+        display: "inline-block",
+        animation: "bounce 1.5s infinite ease-in-out",
+        "@keyframes bounce": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+      }}>
         Grocery List
       </Typography>
-            
+
+      <Box sx={{width: '55%', marginLeft: '23%', marginTop: '3%', }}>
+            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
               {/* Add Grocery Item Section */}
-                <Autocomplete
-                  options={ingredients}
-                  getOptionLabel={(option) => option.label}
-                  value={selectedIngredient}
-                  onChange={(event, newValue) => {
-                    setSelectedIngredient(newValue);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Select Ingredient"
-                      variant="outlined"
-                      placeholder="Search and select an ingredient..."
-                    />
+                <Box>
+                  <Autocomplete
+                    options={ingredients}
+                    getOptionLabel={(option) => option.label}
+                    value={selectedIngredient}
+                    onChange={(event, newValue) => {
+                      setSelectedIngredient(newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Select Ingredient"
+                        variant="outlined"
+                        placeholder="Search and select an ingredient..."
+                      />
+                    )}
+                    fullWidth
+                    style={{ marginBottom: '15px', background: 'smokeWhite', width: '450px', }}
+                  />
+
+                  {error && (
+                    <Typography variant="body2" color="error" style={{ textAlign: 'center' }}>
+                      {error}
+                    </Typography>
                   )}
-                  fullWidth
-                  style={{ marginBottom: '20px' }}
-                />
+                </Box>
 
-                {error && (
-                  <Typography variant="body2" color="error" style={{ textAlign: 'center' }}>
-                    {error}
-                  </Typography>
-                )}
-
+              <Box>
               <Button
-                variant="contained"
-                color="primary"
+                className={"button add-item"}
                 onClick={handleAddItem}
-                style={{
-                  width: '100%',
-                  marginBottom: '20px',
-                  backgroundColor: '#088484',
+                sx={{
+                  border: '1px solid white',
+                  marginTop: '8px',
+                  marginRight: '30px',
                 }}
               >
                 Add Item
               </Button>
-            
+              </Box>
+            </Box>
 
             {/* Display Grocery Items */}
-              {groceryItems.length > 0 ? (
-                  <List>
-                      {groceryItems.map((item) => (
-                          <ListItem  key={item.id}>
-                              <ListItemText primary={item.ingredient_name} />
-                              <ListItemSecondaryAction>
-                                <IconButton edge="end" onClick={() => handleOpenDialog(item)}>
-                                  <Delete color="error" />
-                                </IconButton>
-                              </ListItemSecondaryAction>
-                          </ListItem >
-                      ))}
-                  </List>
-            ) : (
-                <p>No grocery items found.</p>
-            )}
-            {/* Delete Confirmation Dialog */}
-            <Dialog open={openDialog} onClose={handleCloseDialog}>
-                <DialogTitle>Confirm Deletion</DialogTitle>
-                <DialogContent>
-                    Are you sure you want to delete this item?
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseDialog} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleConfirmDelete} color="secondary">
-                        Confirm
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            {/* <ToastContainer /> */}
+                  {groceryItems.length > 0 ? (
+                      <List sx={{ maxHeight: '240px', overflowY: 'auto' }}>
+                          {groceryItems.map((item) => (
+                              <ListItem  key={item.id} sx={{border: '1px solid #8c8c8c', backgroundColor: '#e6e6e6',}}>
+                                  <ListItemText primary={item.ingredient_name}/>
+                                  <ListItemSecondaryAction>
+                                    <IconButton edge="end" onClick={() => handleOpenDialog(item)}>
+                                      <Delete color="error" />
+                                    </IconButton>
+                                  </ListItemSecondaryAction>
+                              </ListItem >
+                          ))}
+                      </List>
+                ) : (
+                    <p>No grocery items found.</p>
+                )}
+                {/* Delete Confirmation Dialog */}
+                <Dialog open={openDialog} onClose={handleCloseDialog}>
+                    <DialogTitle>Confirm Deletion</DialogTitle>
+                    <DialogContent>
+                        Are you sure you want to delete this item?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseDialog} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleConfirmDelete} color="secondary">
+                            Confirm
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                {/* <ToastContainer /> */}
+            </Box>
         </Container>
     );
 };
