@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { Button, Container, Typography } from '@mui/material';
+import { Button, Container, Typography, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import CloseIcon from "@mui/icons-material/Close";
 import 'react-toastify/dist/ReactToastify.css';
-import AuthContext from '../Context/AuthContext'; // Import AuthContext
+import AuthContext from '../Context/AuthContext';
 
-const Logout = () => {
+const Logout = ({ onClose }) => {
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext); // Access logout function from AuthContext
 
@@ -28,17 +29,25 @@ const Logout = () => {
 
   return (
     <Container
-      maxWidth="xs"
+      maxWidth="md"
       style={{
-        backgroundColor: '#FFC857', // Funky and bright color scheme
-        padding: '30px',
-        borderRadius: '10px',
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-        marginTop: '50px',
+        background: 'radial-gradient(circle, #ebda93, #ff9980)',
+        padding: '30px 60px',
         textAlign: 'center',
       }}
     >
       <ToastContainer />
+      <IconButton
+        onClick={onClose}
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+          color: "#333",
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
       <Typography variant="h4" style={{ fontWeight: 'bold', color: '#333', marginBottom: '20px' }}>
         Logout
       </Typography>

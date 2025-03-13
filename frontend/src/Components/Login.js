@@ -40,15 +40,20 @@ const Login = () => {
 
   return (
     <Container
-      maxWidth="xs"
-      style={{
-        backgroundColor: '#A7DFC1', // Bright and funky color scheme
-        padding: '30px',
-        borderRadius: '10px',
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-        marginTop: '50px',
-      }}
+    maxWidth="false"
+    className='gradient-bg'
+    style={{
+      margin: '-8px',
+    }}
     >
+      <Container
+      maxWidth ="xs"
+      style={{
+        padding: '30px',
+        borderRadius: '25px',
+        minHeight: '500px',
+      }}
+      >
       <ToastContainer />
       {isRegistering ? (
         <Register toggleRegister={toggleRegister} />
@@ -56,7 +61,8 @@ const Login = () => {
         <>
           <Typography
             variant="h4"
-            style={{ textAlign: 'center', fontWeight: 'bold', color: '#333' }}
+            className="bouncing-txt"
+            style={{ color: '#fff', paddingTop: '100px', fontFamily: "'Luckiest Guy', static", width: '100%', fontSize: '3rem', }}
           >
             Login
           </Typography>
@@ -83,21 +89,13 @@ const Login = () => {
             <Button
               type="submit"
               fullWidth
-              variant="contained"
-              style={{
-                backgroundColor: '#088484', // Funky green color
-                color: '#fff',
-                fontWeight: 'bold',
-                textTransform: 'none',
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-                borderRadius: '20px',
-              }}
+              className="button add-item"
             >
               Login
             </Button>
             <Typography
               variant="body2"
-              style={{ textAlign: 'center', marginTop: '10px', cursor: 'pointer' }}
+              style={{ textAlign: 'center', marginTop: '10px', cursor: 'pointer', color: '#fff', fontSize: '1rem',fontWeight: 'bold', textShadow: '5px 5px 13px #666666', }}
               onClick={toggleRegister}
             >
               Don't have an account? Register Here
@@ -105,6 +103,7 @@ const Login = () => {
           </form>
         </>
       )}
+      </Container>
     </Container>
   );
 };

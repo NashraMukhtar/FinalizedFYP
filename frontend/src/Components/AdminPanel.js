@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Unauthorized = () => {
+const AdminPanel = () => {
   return (
     <div>
       <h1>Admin Panel</h1>
@@ -9,4 +9,4 @@ const Unauthorized = () => {
   );
 };
 
-export default Unauthorized;
+export default AdminPanel;

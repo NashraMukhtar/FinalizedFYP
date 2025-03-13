@@ -12,7 +12,7 @@ const Register = ({ toggleRegister }) => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const data = await authAPI.register(username, email, password);  // Make sure to create this API in authAPI.js
+      const data = await authAPI.register(username, email, password);
       if (data) {
         toast.success('Registration successful! Please log in.', {
             position: 'top-right',
@@ -28,17 +28,18 @@ const Register = ({ toggleRegister }) => {
 
   return (
     <Container
-      maxWidth="xs"
-      style={{
-        backgroundColor: '#ffdf00',  // Match the Login component's style
-        padding: '30px',
-        borderRadius: '10px',
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-        marginTop: '20px',
-      }}
+    maxWidth ="xs"
+    style={{
+      padding: '30px',
+      borderRadius: '25px',
+      minHeight: '500px',
+    }}
     >
       <ToastContainer />
-      <Typography variant="h4" style={{ textAlign: 'center', fontWeight: 'bold', color: '#333' }}>
+      <Typography 
+            variant="h4"
+            className="bouncing-txt"
+            style={{ color: '#fff', paddingTop: '40px', fontFamily: "'Luckiest Guy', static", width: '100%', fontSize: '3rem', }}>
         Register
       </Typography>
       <form onSubmit={handleRegister} style={{ marginTop: '20px' }}>
@@ -73,17 +74,17 @@ const Register = ({ toggleRegister }) => {
         <Button
           type="submit"
           fullWidth
-          variant="contained"
-          style={{
-            backgroundColor: '#00C853',  // Funky green color
-            color: '#fff',
-            fontWeight: 'bold',
-            textTransform: 'none',
-            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-          }}
+          className="button add-item"
         >
           Register
         </Button>
+        <Typography
+              variant="body2"
+              style={{ textAlign: 'center', marginTop: '10px', cursor: 'pointer', color: '#fff', fontSize: '1rem',fontWeight: 'bold', textShadow: '5px 5px 13px #666666', }}
+              onClick={toggleRegister}
+            >
+              Already have an account? Login Here
+            </Typography>
       </form>
     </Container>
   );

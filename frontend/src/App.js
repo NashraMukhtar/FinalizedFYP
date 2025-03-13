@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './Context/AuthContext';
 import ProtectedRoute from './access_permissions/ProtectedRoute';
 import Login from './Components/Login';
-import Logout from './Components/Logout';
+// import Logout from './Components/Logout';
 import ShoppingList from './Components/ShoppingList';
 import GroceryList from './Components/GroceryList';
+import SuggestRecipes from './Components/SuggestRecipes';
 import AdminPanel from './Components/AdminPanel';
 import Unauthorized from './Components/Unauthorized';
+import AllRecipes from './Components/AllRecipes';
 
 function App() {
   return (
@@ -16,12 +18,12 @@ function App() {
       <Router>
         <Routes>
 
-          <Route path="/login" element={<Login />} /> //public route
+          <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
 
-          <Route element={<ProtectedRoute />}>
+          {/* <Route element={<ProtectedRoute />}>
             <Route path="/logout" element={<Logout />} />
-          </Route> //auth protection
+          </Route> //auth protection */}
 
           {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
@@ -31,6 +33,16 @@ function App() {
           {/* Protected routes */}
           <Route element={<ProtectedRoute userOnly={true} />}>
             <Route path="/home" element={<GroceryList />} />
+          </Route>
+
+          {/* Protected routes */}
+          <Route element={<ProtectedRoute userOnly={true} />}>
+            <Route path="/all-recipes" element={<AllRecipes />} />
+          </Route>
+
+          {/* Protected routes */}
+          <Route element={<ProtectedRoute userOnly={true} />}>
+            <Route path="/suggest-recipes" element={<SuggestRecipes />} />
           </Route>
 
           {/* <Route path="/admin-panel" element={

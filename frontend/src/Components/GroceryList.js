@@ -3,26 +3,27 @@ import groceryAPI from '../APIs/groceryAPI';
 import ingredientAPI from '../APIs/ingredientAPI';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Select from 'react-select';
+// import Select from 'react-select';
 import {
   Container,
   Box,
   Typography,
   TextField,
   Button,
-  List,
-  ListItem,
-  ListItemText,
+  // List,
+  // ListItem,
+  // ListItemText,
+  // ListItemSecondaryAction,
   IconButton,
-  ListItemSecondaryAction,
+  Grid, Card, CardContent, CardActions,
 } from '@mui/material';
-import { CheckCircle, Delete } from '@mui/icons-material';
+import { Delete } from '@mui/icons-material';
 import { Autocomplete } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-// import Navbar from './Navbar';
+import Navbar from './Navbar';
 
 const GroceryList = () => {
     const [groceryItems, setGroceryItems] = useState([]);
@@ -91,6 +92,7 @@ const GroceryList = () => {
             toast.success("Item added successfully");
             refreshGroceryList();  // Refresh the grocery list after adding the item
         } else {
+            setError("Failed to add item to grocery list");
             toast.error("Failed to add item");
         }
 
@@ -126,32 +128,28 @@ const GroceryList = () => {
       className='gradient-bg'
       style={{
         margin: '-8px',
-        // boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
       }}
     >
-      {/* <Navbar /> */}
+      <Navbar />
+
       <ToastContainer 
        autoClose={2000}
       />
-      <Typography variant="h2"sx={{
+
+      {/* HEADLINE */}
+      <Typography variant="h2" className= "bouncing-txt" sx={{
         fontFamily: "'Luckiest Guy', static",
         color: "#ffffff",
-        marginTop: "8%",
+        marginTop: "3%",
         width: "100%",
-        textAlign: "center",
-        display: "inline-block",
-        animation: "bounce 1.5s infinite ease-in-out",
-        "@keyframes bounce": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
       }}>
         Grocery List
       </Typography>
 
-      <Box sx={{width: '55%', marginLeft: '23%', marginTop: '3%', }}>
+      {/* SEARCHBAR, BUTTON, LIST */}
+      <Box sx={{width: '55%', marginLeft: '20%', marginTop: '3%', }}>
             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
-              {/* Add Grocery Item Section */}
+              {/* SEARCHBAR */}
                 <Box>
                   <Autocomplete
                     options={ingredients}
@@ -179,6 +177,7 @@ const GroceryList = () => {
                   )}
                 </Box>
 
+              {/* ADD-ITEM BUTTON */}
               <Box>
               <Button
                 className={"button add-item"}
@@ -194,22 +193,26 @@ const GroceryList = () => {
               </Box>
             </Box>
 
-            {/* Display Grocery Items */}
+            {/* GROCERY ITEMS LIST */}
                   {groceryItems.length > 0 ? (
-                      <List sx={{ maxHeight: '240px', overflowY: 'auto' }}>
-                          {groceryItems.map((item) => (
-                              <ListItem  key={item.id} sx={{border: '1px solid #8c8c8c', backgroundColor: '#e6e6e6',}}>
-                                  <ListItemText primary={item.ingredient_name}/>
-                                  <ListItemSecondaryAction>
-                                    <IconButton edge="end" onClick={() => handleOpenDialog(item)}>
-                                      <Delete color="error" />
-                                    </IconButton>
-                                  </ListItemSecondaryAction>
-                              </ListItem >
-                          ))}
-                      </List>
+                    <Grid container spacing={3} sx={{ width: '1000px', marginLeft: '-140px', }}>
+                    {groceryItems.map((item) => (
+                      <Grid item xs={12} sm={6} md={4} key={item.id}>
+                        <Card className="cards">
+                          <CardContent>
+                            <Typography variant="h5">{item.ingredient_name}</Typography>
+                          </CardContent>
+                          <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <IconButton onClick={() => handleOpenDialog(item)}>
+                              <Delete color="error" />
+                            </IconButton>
+                          </CardActions>
+                        </Card>
+                      </Grid>
+                      ))}
+                  </Grid>
                 ) : (
-                    <p>No grocery items found.</p>
+                  <p class='add-item-to-view-list'>No items found.<br></br> Start Adding Items!</p>
                 )}
                 {/* Delete Confirmation Dialog */}
                 <Dialog open={openDialog} onClose={handleCloseDialog}>

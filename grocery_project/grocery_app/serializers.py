@@ -35,10 +35,11 @@ class GroceryItemSerializer(serializers.ModelSerializer):
 
 class ShoppingItemSerializer(serializers.ModelSerializer):
     ingredient = serializers.PrimaryKeyRelatedField(queryset=Ingredient.objects.all())
+    ingredient_name = serializers.CharField(source='ingredient.name', read_only=True)
 
     class Meta:
         model = ShoppingItem
-        fields = ['id', 'ingredient']
+        fields = ['id', 'ingredient', 'ingredient_name']
 
     def create(self, validated_data):
         user = self.context['request'].user

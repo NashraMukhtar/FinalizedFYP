@@ -1,182 +1,268 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Container,
-  Button,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
-  IconButton,
-} from '@mui/material';
+import shoppingAPI from '../APIs/shoppingAPI';
+import groceryAPI from '../APIs/groceryAPI';
+import ingredientAPI from '../APIs/ingredientAPI';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import shoppingAPI from '../APIs/shoppingAPI'; // Adjust the import as needed
-import { Delete, CheckCircle } from '@mui/icons-material';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import ingredientsAPI from '../APIs/ingredientAPI'; // Ensure you have this API for fetching ingredients
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  Grid, Card, CardContent, CardActions,
+} from '@mui/material';
+import { Delete, ShoppingCart } from '@mui/icons-material';
+import { Autocomplete } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import Navbar from './Navbar';
 
-const ShoppingList = () => {
-  const [shoppingItems, setShoppingItems] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [selectedIngredient, setSelectedIngredient] = useState(null); // Updated to store selected ingredient
-  const [error, setError] = useState('');
-  const token = localStorage.getItem('token'); // Make sure to manage token appropriately
+const ShoppingList2 = () => {
+    const [shoppingItems, setShoppingItems] = useState([]);
+    const [ingredients, setIngredients] = useState([]);
+    const [selectedIngredient, setSelectedIngredient] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [ingredientLoading, setIngredientLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [openDialog, setOpenDialog] = useState(false);  // State for dialog
+    const [itemToDelete, setItemToDelete] = useState(null);
 
-  useEffect(() => {
-    const fetchShoppingItems = async () => {
-      const items = await shoppingAPI.getShoppingItems(token);
-      setShoppingItems(items);
+    // Fetch grocery items on component mount
+    useEffect(() => {
+        const fetchShoppingItems = async () => {
+            const token = localStorage.getItem("token");
+            const items = await shoppingAPI.getShoppingItems(token);
+            setShoppingItems(items || []);
+            setLoading(false);
+        };
+
+        fetchShoppingItems();
+    }, []);
+
+    // Fetch ingredient list on component mount
+    useEffect(() => {
+        const fetchIngredients = async () => {
+            const token = localStorage.getItem("token");
+            const ingredientsList = await ingredientAPI.getIngredients(token);
+            setIngredients(ingredientsList.map(ingredient => ({
+                value: ingredient.id,
+                label: ingredient.name
+            })));
+            setIngredientLoading(false);
+        };
+
+        fetchIngredients();
+    }, []);
+
+    // Function to refresh grocery list after adding or deleting items
+    const refreshShoppingList = async () => {
+        const token = localStorage.getItem("token");
+        const items = await shoppingAPI.getShoppingItems(token);
+        setShoppingItems(items || []);
     };
 
-    const fetchIngredients = async () => {
-      const ingredientList = await ingredientsAPI.getIngredients(token); // Fetch the list of ingredients
-      setIngredients(ingredientList);
+    // Handle adding a grocery item
+    const handleAddItem = async () => {
+        if (!selectedIngredient) {
+            toast.error("Please select an ingredient");
+            return;
+        }
+
+        const itemExists = shoppingItems.some(item => item.ingredient === selectedIngredient.value);
+    
+        if (itemExists) {
+            toast.error("This ingredient already exists in your shopping list");
+            setSelectedIngredient(null);
+            return;
+    }
+
+        const token = localStorage.getItem("token");
+        const item = { ingredient: selectedIngredient.value };  // Send ingredient ID
+        const response = await shoppingAPI.addShoppingItem(item, token);
+
+        if (response) {
+            toast.success("Item added successfully");
+            refreshShoppingList();  // Refresh the shopping list after adding the item
+        } else {
+            toast.error("Failed to add item");
+        }
+
+        setSelectedIngredient(null);  // Clear the input field after adding
     };
 
-    fetchShoppingItems();
-    fetchIngredients();
-  }, [token]);
+    const handleMoveToGrocery = async (id) => {
+        try {
+          const token = localStorage.getItem("token");
+      
+          // Check if the item already exists in grocery list
+          const groceryListRes = await groceryAPI.getGroceryItems(token);
+          const groceryItems = groceryListRes;
+      
+          const shoppingItem = shoppingItems.find(item => item.id === id);
+          const ingredientId = shoppingItem ? shoppingItem.ingredient : null;
+      
+          if (groceryItems.some(item => item.ingredient === ingredientId)) {
+            toast.info("Item already exists in Grocery List!");
+            return;
+          }
+      
+          // Move to Grocery List API call
+          shoppingAPI.moveToGroceryList(id, token);
 
-  const handleAddItem = async () => {
-    if (!selectedIngredient) {
-      setError('Please select an ingredient!');
-      return;
-    }
-  
-    try {
-      const newItem = { ingredient: selectedIngredient.id };
-      await shoppingAPI.addShoppingItem(newItem, token);
-      setError('');
-      setSelectedIngredient(null);
-  
-      // Refresh shopping items after adding the new item
-      const items = await shoppingAPI.getShoppingItems(token);
-      setShoppingItems(items); // Update state with the new list of shopping items
-      toast.success('Item added to shopping list!', {
-        position: 'top-right',
-      });
-    } catch (err) {
-      toast.error('Error adding item to shopping list!', {
-        position: 'top-right',
-      });
-    }
-  };
-  
-  const handleDeleteItem = async (id) => {
-    await shoppingAPI.deleteShoppingItem(id, token);
-    const items = await shoppingAPI.getShoppingItems(token);
-    setShoppingItems(items);
-    toast.success('Item deleted!', {
-      position: 'top-right',
-    });
+          // Remove from Shopping List UI
+          setShoppingItems(prevItems => prevItems.filter(item => item.id !== id));
+      
+          toast.success("Item moved to Grocery List! ");
+        } catch (error) {
+          setError(error);
+          toast.error("Failed to move item.");
+        }
+      };
+
+    const handleOpenDialog = (item) => {
+      setItemToDelete(item);
+      setOpenDialog(true);
   };
 
-  const handleMoveToGroceryList = async (id) => {
-    try {
-        const response = await shoppingAPI.moveToGroceryList(id, token);
-        console.log('API Response:', response);
-      
-        if (response && response.success) {
-          const items = await shoppingAPI.getShoppingItems(token);
-          setShoppingItems(items);
-      
-          toast.success('Item moved to grocery list!', {
-            position: 'top-right',
-          });
-        } else {
-          throw new Error(response?.error || 'Unable to move item to grocery list.');
-        }
-      } catch (err) {
-        console.error("Error occurred:", err);
-        
-        // Handle Axios error
-        if (err.response) {
-          const errorMessage = err.response.data.error || 'Error moving item to grocery list!';
-          toast.error(errorMessage, {
-            position: 'top-right',
-          });
-        } else {
-          toast.error('Network error, please try again.', {
-            position: 'top-right',
-          });
-        }
-      }      
+  // Handle closing the dialog
+  const handleCloseDialog = () => {
+      setOpenDialog(false);
+      setItemToDelete(null);
   };
-  
-  return (
-    <Container
-      maxWidth="md"
+
+  // Confirm the deletion of the item
+  const handleConfirmDelete = async () => {
+      const token = localStorage.getItem("token");
+      await shoppingAPI.deleteShoppingItem(itemToDelete.id, token);
+      setShoppingItems(shoppingItems.filter(item => item.id !== itemToDelete.id));
+      toast.success("Item deleted successfully");
+      handleCloseDialog();  // Close the dialog after deletion
+  };
+
+
+  if (loading || ingredientLoading) return <div style={{marginTop:'15%',marginLeft:'45%',fontSize:'larger', fontWeight:'bolder'}}>Loading...</div>;
+
+
+    return (
+      <Container
+      maxWidth="false"
+      className='gradient-bg'
       style={{
-        backgroundColor: '#A7DFC1',
-        padding: '30px',
-        borderRadius: '10px',
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-        marginTop: '50px',
+        margin: '-8px',
       }}
     >
-      <ToastContainer />
-      <Typography variant="h4" style={{ textAlign: 'center', fontWeight: 'bold', color: '#333' }}>
+      <Navbar />
+
+      <ToastContainer 
+       autoClose={2000}
+      />
+
+      {/* HEADLINE */}
+      <Typography variant="h2" className= "bouncing-txt"
+      sx={{
+        color: "#ffffff",
+        marginTop: "2%",
+        width: "100%",
+        fontFamily: "'Luckiest Guy', static",
+      }}>
         Shopping List
       </Typography>
 
-      {/* Single Field Searchable Dropdown for Ingredients */}
-      <Autocomplete
-        options={ingredients}
-        getOptionLabel={(option) => option.name}
-        value={selectedIngredient}
-        onChange={(event, newValue) => {
-          setSelectedIngredient(newValue);
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Select Ingredient"
-            variant="outlined"
-            placeholder="Search and select an ingredient..."
-          />
-        )}
-        fullWidth
-        style={{ marginBottom: '20px' }}
-      />
+      {/* SEARCHBAR, BUTTON, LIST */}
+      <Box sx={{width: '55%', marginLeft: '20%', marginTop: '3%', }}>
+            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
+              {/* SEARCHBAR */}
+                <Box>
+                  <Autocomplete
+                    options={ingredients}
+                    getOptionLabel={(option) => option.label}
+                    value={selectedIngredient}
+                    onChange={(event, newValue) => {
+                      setSelectedIngredient(newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Select Ingredient"
+                        variant="outlined"
+                        placeholder="Search and select an ingredient..."
+                      />
+                    )}
+                    fullWidth
+                    style={{ marginBottom: '15px', background: 'smokeWhite', width: '450px', }}
+                  />
 
-      {error && (
-        <Typography variant="body2" color="error" style={{ textAlign: 'center' }}>
-          {error}
-        </Typography>
-      )}
+                  {error && (
+                    <Typography variant="body2" color="error" style={{ textAlign: 'center' }}>
+                      {error}
+                    </Typography>
+                  )}
+                </Box>
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleAddItem}
-        style={{
-          width: '100%',
-          marginBottom: '20px',
-          backgroundColor: '#088484',
-        }}
-      >
-        Add Item
-      </Button>
+              {/* ADD-ITEM BUTTON */}
+              <Box>
+              <Button
+                className={"button add-item"}
+                onClick={handleAddItem}
+                sx={{
+                  border: '1px solid white',
+                  marginTop: '8px',
+                  marginRight: '30px',
+                }}
+              >
+                Add Item
+              </Button>
+              </Box>
+            </Box>
 
-      <List>
-        {shoppingItems.map((item) => (
-          <ListItem key={item.id}>
-            <ListItemText primary={item.ingredient_name} />
-            <ListItemSecondaryAction>
-              <IconButton edge="end" onClick={() => handleMoveToGroceryList(item.id)}>
-                <CheckCircle color="success" />
-              </IconButton>
-              <IconButton edge="end" onClick={() => handleDeleteItem(item.id)}>
-                <Delete color="error" />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
-      </List>
-    </Container>
-  );
+            {/* SHOPPING ITEMS GRID */}
+                  {shoppingItems.length > 0 ? (
+                    <Grid container spacing={3} sx={{ width: '1000px', marginLeft: '-140px', }}>
+                    {shoppingItems.map((item) => (
+                      <Grid item xs={12} sm={6} md={4} key={item.id}>
+                        <Card className="cards">
+                          <CardContent>
+                            <Typography variant="h5">{item.ingredient_name}</Typography>
+                          </CardContent>
+                          <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <IconButton onClick={() => handleMoveToGrocery(item.id)}>
+                              <ShoppingCart color="primary" />
+                            </IconButton>
+                            <IconButton onClick={() => handleOpenDialog(item)}>
+                              <Delete color="error" />
+                            </IconButton>
+                          </CardActions>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+                  
+                ) : (
+                    <p class='add-item-to-view-list'>No items found.<br></br> Start Adding Items!</p>
+                )}
+                {/* Delete Confirmation Dialog */}
+                <Dialog open={openDialog} onClose={handleCloseDialog}>
+                    <DialogTitle>Confirm Deletion</DialogTitle>
+                    <DialogContent>
+                        Are you sure you want to delete this item?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseDialog} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleConfirmDelete} color="secondary">
+                            Confirm
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                {/* <ToastContainer /> */}
+            </Box>
+        </Container>
+    );
 };
 
-export default ShoppingList;
+export default ShoppingList2;

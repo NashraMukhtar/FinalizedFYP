@@ -3,13 +3,9 @@ import Axios from "axios";
 const API_URL = 'http://localhost:8000/';
 
 const recipeAPI = {
-  getRecipes: async (token) => {
+  getRecipes: async () => {
     try {
-      const res = await Axios.get(`${API_URL}recipes/`, {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
+      const res = await Axios.get(`${API_URL}recipes/`);
       return res.data;
     } catch (err) {
       console.log("from recipeAPI:",err);
