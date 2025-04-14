@@ -4,13 +4,14 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './Context/AuthContext';
 import ProtectedRoute from './access_permissions/ProtectedRoute';
 import Login from './Components/Login';
-// import Logout from './Components/Logout';
 import ShoppingList from './Components/ShoppingList';
 import GroceryList from './Components/GroceryList';
 import SuggestRecipes from './Components/SuggestRecipes';
-import AdminPanel from './Components/AdminPanel';
+import AdminHomePage from './Components/AdminHomePage';
+import AdminNavbar from './Components/AdminNavbar';
 import Unauthorized from './Components/Unauthorized';
-import AllRecipes from './Components/AllRecipes';
+import AllRecipes from './Components/AllRecipesUsersPage';
+import RecipeManagementPage from './Components/RecipeManagementPage';
 
 function App() {
   return (
@@ -45,14 +46,18 @@ function App() {
             <Route path="/suggest-recipes" element={<SuggestRecipes />} />
           </Route>
 
-          {/* <Route path="/admin-panel" element={
-          <ProtectedRoute adminOnly ={true}>
-            <AdminPanel />
-          </ProtectedRoute>} /> //admin protection */}
+          <Route element={<ProtectedRoute adminOnly={true} />}>
+            <Route path="/admin-navbar" element={<AdminNavbar />} />
+          </Route>
 
             {/* Admin-only routes */}
           <Route element={<ProtectedRoute adminOnly={true} />}>
-            <Route path="/admin-panel" element={<AdminPanel />} />
+            <Route path="/admin-panel" element={<AdminHomePage />} />
+          </Route>
+
+            {/* Admin-only routes */}
+            <Route element={<ProtectedRoute adminOnly={true} />}>
+            <Route path="/admin/recipes" element={<RecipeManagementPage />} />
           </Route>
 
           {/* <Route path="/" exact element={<Home />} /> //public route */}

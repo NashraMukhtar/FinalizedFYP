@@ -3,27 +3,19 @@ import groceryAPI from '../APIs/groceryAPI';
 import ingredientAPI from '../APIs/ingredientAPI';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import Select from 'react-select';
 import {
   Container,
   Box,
   Typography,
   TextField,
   Button,
-  // List,
-  // ListItem,
-  // ListItemText,
-  // ListItemSecondaryAction,
   IconButton,
   Grid, Card, CardContent, CardActions,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { Autocomplete } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import Navbar from './Navbar';
+import UserNavbar from './UserNavbar';
+import ConfirmDeleteDialog from './ConfirmDeleteDialog';
 
 const GroceryList = () => {
     const [groceryItems, setGroceryItems] = useState([]);
@@ -130,7 +122,7 @@ const GroceryList = () => {
         margin: '-8px',
       }}
     >
-      <Navbar />
+      <UserNavbar />
 
       <ToastContainer 
        autoClose={2000}
@@ -198,7 +190,16 @@ const GroceryList = () => {
                     <Grid container spacing={3} sx={{ width: '1000px', marginLeft: '-140px', }}>
                     {groceryItems.map((item) => (
                       <Grid item xs={12} sm={6} md={4} key={item.id}>
-                        <Card className="cards">
+                        <Card sx={{
+                          border: '1px solid #8c8c8c',
+                          padding: '10px',
+                          transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                          boxShadow: '0 0 0 rgba(0, 0, 0, 0)',
+                          '&:hover': {
+                            transform: 'scale(1.05)',
+                            boxShadow: '0px 10px 20px 3px rgba(236, 104, 133, 0.9)',
+                          }
+                        }}>
                           <CardContent>
                             <Typography variant="h5">{item.ingredient_name}</Typography>
                           </CardContent>
@@ -215,7 +216,7 @@ const GroceryList = () => {
                   <p class='add-item-to-view-list'>No items found.<br></br> Start Adding Items!</p>
                 )}
                 {/* Delete Confirmation Dialog */}
-                <Dialog open={openDialog} onClose={handleCloseDialog}>
+                {/* <Dialog open={openDialog} onClose={handleCloseDialog}>
                     <DialogTitle>Confirm Deletion</DialogTitle>
                     <DialogContent>
                         Are you sure you want to delete this item?
@@ -228,7 +229,12 @@ const GroceryList = () => {
                             Confirm
                         </Button>
                     </DialogActions>
-                </Dialog>
+                </Dialog> */}
+                <ConfirmDeleteDialog
+                        open={openDialog}
+                        onCancel={() => setOpenDialog(false)}
+                        onConfirm={handleConfirmDelete}
+                      />
                 {/* <ToastContainer /> */}
             </Box>
         </Container>

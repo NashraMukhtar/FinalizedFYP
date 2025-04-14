@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Container, Box, Typography, TextField,IconButton, Grid, Card, CardContent, } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Container, Box, Typography, Grid, Card, CardContent, } from "@mui/material";
 import recipeAPI from "../APIs/recipeAPI";
 import ingredientAPI from "../APIs/ingredientAPI";
-import Navbar from './Navbar';
+import UserNavbar from './UserNavbar';
 
 const AllRecipes = () => {
     const [recipes, setRecipes] = useState([]);
@@ -56,7 +56,7 @@ const AllRecipes = () => {
             margin: '-8px',
         }}
         >
-            <Navbar />
+            <UserNavbar />
             {/* HEADING */}
             <Typography variant="h2" className= "bouncing-txt"
                 sx={{

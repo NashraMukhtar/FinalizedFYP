@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes  
 from rest_framework import generics, status
-from core.permissions import IsAdminUserOrReadOnly, IsOwnerOrReadOnly
+from core.permissions import IsAdminUserOrReadOnly, IsOwnerOrReadOnly,IsOwnerOrAdminOrReadOnly
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import GroceryItem, RecipeCategory, Recipe, RecipeIngredient, Ingredient, ShoppingItem
 from .serializers import GroceryItemSerializer, RecipeCategorySerializer, RecipeSerializer, IngredientSerializer, RecipeIngredientSerializer, ShoppingItemSerializer
@@ -114,7 +114,7 @@ class RecipeListCreateView(generics.ListCreateAPIView):
 # Retrieve, Update, and Delete Recipe by ID
 class RecipeDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RecipeSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrAdminOrReadOnly]
 
     def get_queryset(self):
         return Recipe.objects.all()

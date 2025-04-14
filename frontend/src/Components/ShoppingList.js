@@ -19,7 +19,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import Navbar from './Navbar';
+import UserNavbar from './UserNavbar';
 
 const ShoppingList2 = () => {
     const [shoppingItems, setShoppingItems] = useState([]);
@@ -155,7 +155,7 @@ const ShoppingList2 = () => {
         margin: '-8px',
       }}
     >
-      <Navbar />
+      <UserNavbar />
 
       <ToastContainer 
        autoClose={2000}

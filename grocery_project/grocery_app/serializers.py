@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 from .models import GroceryItem, RecipeCategory, Recipe, Ingredient, RecipeIngredient, ShoppingItem
 
 
@@ -61,10 +62,11 @@ class RecipeCategorySerializer(serializers.ModelSerializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     recipe_ingredients = RecipeIngredientSerializer(many=True, required=False)
+    created_by = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Recipe
-        fields = ['id', 'name', 'description', 'category', 'steps', 'recipe_ingredients']
+        fields = ['id', 'name', 'description', 'category', 'steps', 'recipe_ingredients', 'created_by',]
 
     def create(self, validated_data):
         ingredients_data = validated_data.pop('recipe_ingredients', [])
@@ -89,11 +91,12 @@ class RecipeSerializer(serializers.ModelSerializer):
         instance.steps = validated_data.get('steps', instance.steps)
         instance.save()
 
-        recipe_ingredient_objs = []
+        # ✅ Delete all existing recipe_ingredients
+        instance.recipe_ingredients.all().delete()
+
+        # ✅ Recreate the new ones
         for ingredient_data in ingredients_data:
             ingredient = ingredient_data['ingredient']
-            recipe_ingredient_objs.append(RecipeIngredient(ingredient=ingredient, recipe=instance))
-
-        instance.recipe_ingredients.set(recipe_ingredient_objs, bulk=False)
+            RecipeIngredient.objects.create(ingredient=ingredient, recipe=instance)
 
         return instance

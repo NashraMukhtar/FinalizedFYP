@@ -1,0 +1,102 @@
+import { Link } from 'react-router-dom';
+import { Menu, MenuItem, IconButton, Button, Dialog } from '@mui/material';
+import { motion } from "framer-motion";
+import { AccountCircle } from "@mui/icons-material";
+import { useState } from 'react';
+import '../App.css';
+import Logout from './Logout'
+
+export default function AdminNavbar () {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openDialog, setOpenDialog] = useState(false);
+    const open = Boolean(anchorEl);
+  
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+    
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
+    
+      const handleLogout = () => {
+        setOpenDialog(true);
+        handleClose();
+      };
+    
+      const handleDialogClose = () => {
+        setOpenDialog(false);
+      };
+
+  return (
+    <nav style={{ 
+        display: "flex",
+        justifyContent:"space-between",
+        padding: "12px",
+        position: "sticky", 
+        top: 0, 
+        zIndex: 1000, 
+        backgroundColor: "#4682B4",
+        }}>
+        
+        {/* NAV-BTN SIDE */}
+      <div style={{
+        display: "flex",
+        gap: "16px",
+        width:"50%",
+        paddingTop:"6px",
+        }}>
+        <Link to="/admin/ingredients">
+          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3'}}>Ingredients</Button>
+        </Link>
+        <Link to="/admin/recipes">
+          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3'}}>Recipes</Button>
+        </Link>
+        <Link to="/admin/users">
+          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3'}}>Users</Button>
+        </Link>
+      </div>
+
+        {/* DROPDOWN SIDE */}
+      <div style={{
+        display: "flex",
+        gap: "16px",
+      }}>
+        <Link to="/admin/dashboard">
+          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3', marginTop: '6px'}}>Dashboard</Button>
+        </Link>
+
+        <IconButton onClick={handleClick} size="large"
+        sx={{
+          color: "black", 
+          backgroundColor: "f0f0f0",
+        }}>
+          <AccountCircle fontSize="large" />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            component: motion.div,
+            initial: { opacity: 0, scale: 0.9 },
+            animate: { opacity: 1, scale: 1 },
+            exit: { opacity: 0, scale: 0.9 },
+            transition: { duration: 0.2 },
+            sx: {
+              backgroundColor: "#f2f2f2",
+              color: "black",
+              boxShadow: 3,
+            },
+          }}
+        >
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </Menu>
+
+        <Dialog open={openDialog} onClose={handleDialogClose}>
+          <Logout onClose={handleDialogClose} />
+        </Dialog>
+      </div>
+    </nav>
+  );
+};

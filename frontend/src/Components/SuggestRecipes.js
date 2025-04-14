@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import recipeAPI from "../APIs/recipeAPI";
 import ingredientAPI  from "../APIs/ingredientAPI"
 import { Box, Typography, List, ListItem, ListItemText, Paper, Container } from "@mui/material";
-import Navbar from './Navbar';
+import UserNavbar from './UserNavbar';
 
 
 const SuggestRecipes = () => {
@@ -37,7 +37,7 @@ const SuggestRecipes = () => {
         margin: '-8px',
       }}
     >
-        <Navbar />
+        <UserNavbar />
     
     <Box display="flex" height="70vh" justifyContent="space-between">
       {/* Left Panel - Recipe List */}

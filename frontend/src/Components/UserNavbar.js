@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, MenuItem, IconButton, Dialog } from "@mui/material";
+import { Link } from "react-router-dom";
+import { Menu, MenuItem, IconButton, Dialog, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import { AccountCircle } from "@mui/icons-material";
-import {Button} from "@mui/material";
 import "../App.css";
 import Logout from "./Logout";
 
-export default function Navbar() {
+export default function UserNavbar() {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
