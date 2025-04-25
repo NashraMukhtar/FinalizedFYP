@@ -16,6 +16,18 @@ class GroceryItemListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         return GroceryItem.objects.filter(user=self.request.user)
 
+    def create(self, request, *args, **kwargs):
+        ingredient_id = request.data.get("ingredient")
+
+        # Prevent duplicates for the same user and ingredient
+        if GroceryItem.objects.filter(user=request.user, ingredient_id=ingredient_id).exists():
+            return Response(
+                {"error": "Item already exists in your grocery list."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return super().create(request, *args, **kwargs)
+
 # Retrieve, Update, and Delete Grocery Items
 class GroceryItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GroceryItemSerializer

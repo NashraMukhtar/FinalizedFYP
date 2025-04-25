@@ -13,7 +13,7 @@ const groceryAPI = {
       }); // Check the format of the response
       return res.data;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   },
   addGroceryItem: async (item, token) => {
@@ -25,7 +25,7 @@ const groceryAPI = {
       });
       return res.data;
     } catch (err) {
-      console.log("from groceryAPI:",err);
+      throw err;
     }
   },
   updateGroceryItem: async (id, item, token) => {
@@ -37,7 +37,7 @@ const groceryAPI = {
       });
       return res.data;
     } catch (err) {
-      console.log("from groceryAPI:",err);
+      throw err;
     }
   },
   deleteGroceryItem: async (id, token) => {
@@ -49,7 +49,7 @@ const groceryAPI = {
       });
       return res.data;
     } catch (err) {
-      console.log("from groceryAPI:",err);
+      throw err;
     }
   },
 };

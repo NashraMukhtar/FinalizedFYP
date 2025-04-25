@@ -32,19 +32,20 @@ export default function AdminNavbar () {
     <nav style={{ 
         display: "flex",
         justifyContent:"space-between",
-        padding: "12px",
+        padding: "5px",
         position: "sticky", 
         top: 0, 
         zIndex: 1000, 
         backgroundColor: "#4682B4",
         }}>
         
-        {/* NAV-BTN SIDE */}
+        {/* NAV-BTNS SIDE */}
       <div style={{
         display: "flex",
         gap: "16px",
         width:"50%",
         paddingTop:"6px",
+        paddingLeft: "20px",
         }}>
         <Link to="/admin/ingredients">
           <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3'}}>Ingredients</Button>
@@ -61,14 +62,15 @@ export default function AdminNavbar () {
       <div style={{
         display: "flex",
         gap: "16px",
+        paddingRight: "10px",
       }}>
         <Link to="/admin/dashboard">
-          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3', marginTop: '6px'}}>Dashboard</Button>
+          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3', marginTop: '6px'}}>Requests</Button>
         </Link>
 
         <IconButton onClick={handleClick} size="large"
         sx={{
-          color: "black", 
+          color: "white", 
           backgroundColor: "f0f0f0",
         }}>
           <AccountCircle fontSize="large" />

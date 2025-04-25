@@ -46,6 +46,58 @@ const authAPI = {
         throw err;
       }
     },
+    getAllUsers: async(token) => {
+      try{
+        const res = await Axios.get(`${API_URL}all-users/`, {
+          headers: { Authorization: `Token ${token}` },
+        });
+        return res.data;
+      } catch (err) {
+        throw err;
+      }
+    },
+    getUserActivity: async(token, userId) => {
+      try {
+        const res = await Axios.get(`${API_URL}users/${userId}/activity/`, {
+          headers: { Authorization: `Token ${token}` },
+        });
+        return res.data;
+      } catch (err) {
+        throw err;
+      }
+    },
+    deleteUser: async(token, userId) => {
+      try {
+        const res = await Axios.delete(`${API_URL}users/${userId}/delete/`, {
+          headers: { Authorization: `Token ${token}` },
+        });
+        return res.data;
+      } catch (err) {
+        throw err;
+      }
+    },
+    getDashboardCounts: async(token) => {
+      try {
+        const res = await Axios.get(`${API_URL}dashboard-counts/`, {
+          headers: { Authorization: `Token ${token}` },
+        });
+        return res.data;
+      } catch (err) {
+        throw err;
+      }
+    },
+    extractGrocery: async (token, formData) => {
+      try {
+        const res = await Axios.post(`${API_URL}extract-grocery/`, formData, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+        return res.data;
+      } catch (err) {
+        throw err;
+      }
+    },
   };
   
   export default authAPI;

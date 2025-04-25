@@ -6,8 +6,8 @@ import UserNavbar from './UserNavbar';
 
 const AllRecipes = () => {
     const [recipes, setRecipes] = useState([]);
-    const [selectedRecipe, setSelectedRecipe] = useState(null);
     const [ingredients, setIngredients] = useState([]);
+    const [selectedRecipe, setSelectedRecipe] = useState(null);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -69,20 +69,31 @@ const AllRecipes = () => {
             </Typography>
 
             {/* RECIPE LIST */}
-            <Box sx={{width: '55%', marginLeft: '20%', marginTop: '3%', border: '1', }}>
-                <Grid container spacing={3} sx={{ width: '1000px', marginLeft: '-140px',justifyContent: 'space-between', paddingTop: '40px',}}>
+            {/* <Box sx={{width: '55%', marginLeft: '20%', marginTop: '3%', border: '1', }}> */}
+                <Grid container spacing={2} sx={{ marginTop: 2, width: '80%', marginLeft:'10%'}}>
                     {recipes?.map(recipe => (
-                        <Grid recipe xs={9} sm={5} md={3} key={recipe.id} onClick={() => handleOpen(recipe)}>
-                            <Card className="cards" sx={{ width: '300px', cursor: 'pointer',}}>
+                        <Grid item xs={12} sm={6} md={4} key={recipe.id} onClick={() => handleOpen(recipe)}>
+                            <Card className="cards" 
+                            sx={{
+                                borderRadius: 3,
+                                border: "1px solid #b3b3b3",
+                                backgroundColor: "#fff",
+                                cursor: "pointer",
+                                transition: "transform 0.2s",
+                                '&:hover': {
+                                    backgroundColor: "#f5f5f5",
+                                    transform: "scale(1.02)",
+                                },
+                            }}>
                                 <CardContent>
-                                    <Typography variant="h4" fontWeight="bold">{recipe.name}</Typography>
-                                    <Typography variant="h6">{recipe.description}</Typography>
+                                    <Typography variant="h5" fontWeight="bold">{recipe.name}</Typography>
+                                    <Typography variant="body2">{recipe.description}</Typography>
                                 </CardContent>
                             </Card>
                         </Grid>
                     ))}
                 </Grid>
-            </Box>
+            {/* </Box> */}
 
             {/* RECIPE DETAIL DIALOGUE */}
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm" sx={{borderRadius: '30px'}}>

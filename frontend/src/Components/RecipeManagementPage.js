@@ -24,7 +24,7 @@ import { Edit, Delete, Add } from "@mui/icons-material";
 import recipeAPI from "../APIs/recipeAPI";
 import ingredientAPI from "../APIs/ingredientAPI";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
-import AdminNavbar from "./AdminNavbar";
+// import AdminNavbar from "./AdminNavbar";
 
 const RecipeManagementPage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -117,10 +117,12 @@ const RecipeManagementPage = () => {
     try {
       const token = localStorage.getItem("token");
       await recipeAPI.deleteRecipe(recipeToDelete, token);
+      toast.success("Recipe deleted successfully!");
       fetchRecipes();
       setOpenDeleteDialog(false);
       setRecipeToDelete(null);
     } catch (error) {
+      toast.error("Error deleting recipe!");
       console.error("Error deleting recipe:", error);
     }
   };
@@ -151,7 +153,7 @@ const RecipeManagementPage = () => {
         name: currentRecipe.name,
         description: currentRecipe.description,
         steps: currentRecipe.steps,
-        category: currentRecipe.category || 1, // fallback if category is not selected
+        category: currentRecipe.category || 1,
         recipe_ingredients: currentRecipe.recipe_ingredients || [],
       };
 
@@ -183,6 +185,9 @@ const RecipeManagementPage = () => {
         margin: '-8px',
       }}
     >
+      <ToastContainer 
+        autoClose={2000}
+      />
       {/* <AdminNavbar/> */}
       {/* Add Recipe Button */}
       <Box display="flex" justifyContent="center" mb={3}>
@@ -204,10 +209,6 @@ const RecipeManagementPage = () => {
           Add Recipe
         </Button>
       </Box>
-
-      <ToastContainer 
-        autoClose={2000}
-      />
 
       {/* Recipe Grid */}
       <Grid container spacing={3}

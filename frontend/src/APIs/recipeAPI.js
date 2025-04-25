@@ -8,7 +8,7 @@ const recipeAPI = {
       const res = await Axios.get(`${API_URL}recipes/`);
       return res.data;
     } catch (err) {
-      console.log("from recipeAPI:",err);
+      throw err;
     }
   },
   addRecipe: async (recipe, token) => {
@@ -20,7 +20,7 @@ const recipeAPI = {
       });
       return res.data;
     } catch (err) {
-      console.log("from recipeAPI:",err);
+      throw err;
     }
   },
   updateRecipe: async (id, recipe, token) => {
@@ -32,7 +32,7 @@ const recipeAPI = {
       });
       return res.data;
     } catch (err) { 
-      console.log("from recipeAPI:",err);
+      throw err;
     }
   },
   deleteRecipe: async (id, token) => {
@@ -44,7 +44,7 @@ const recipeAPI = {
       });
       return res.data;
     } catch (err) {
-      console.log("from recipeAPI:",err);
+      throw err;
     }
   },
   getUserRecipes: async (token) => {
@@ -56,7 +56,7 @@ const recipeAPI = {
       });
       return res.data;
     } catch (err) {
-      console.log("from recipeAPI:",err);
+      throw err;
     }
   },
   getSuggestedRecipes: async (token) => {

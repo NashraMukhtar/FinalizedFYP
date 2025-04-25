@@ -3,6 +3,7 @@ import groceryAPI from '../APIs/groceryAPI';
 import ingredientAPI from '../APIs/ingredientAPI';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Box,
@@ -13,9 +14,12 @@ import {
   Grid, Card, CardContent, CardActions,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import { Autocomplete } from '@mui/material';
 import UserNavbar from './UserNavbar';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog';
+import { Image as ImageIcon } from 'lucide-react';
+import OcrGroceryUpload2 from './OcrGroceryUpload2';
 
 const GroceryList = () => {
     const [groceryItems, setGroceryItems] = useState([]);
@@ -26,6 +30,7 @@ const GroceryList = () => {
     const [error, setError] = useState('');
     const [openDialog, setOpenDialog] = useState(false);  // State for dialog
     const [itemToDelete, setItemToDelete] = useState(null);
+    const [openOcrDialog, setOpenOcrDialog] = useState(false);
 
     // Fetch grocery items on component mount
     useEffect(() => {
@@ -111,6 +116,7 @@ const GroceryList = () => {
       handleCloseDialog();  // Close the dialog after deletion
   };
 
+    const navigate = useNavigate();
 
     if (loading || ingredientLoading) return <div style={{marginTop:'15%',marginLeft:'45%',fontSize:'larger', fontWeight:'bolder'}}>Loading...</div>;
 
@@ -132,16 +138,73 @@ const GroceryList = () => {
       <Typography variant="h2" className= "bouncing-txt" sx={{
         fontFamily: "'Luckiest Guy', static",
         color: "#ffffff",
-        marginTop: "3%",
         width: "100%",
       }}>
-        Grocery List
+        Your Available Items
       </Typography>
 
+            {/*SUGGEST RECIPE BUTTON*/}
+            <Box sx={{marginLeft: '23%', marginBottom:2, textAlign: 'center', width: '55%'}}>
+              <Button
+                fullWidth
+                variant="contained"
+                startIcon={<RestaurantMenuIcon />}
+                sx={{
+                  backgroundColor: '#ff3cac',
+                  backgroundImage: 'linear-gradient(225deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%)',
+                  color: '#fff',
+                  fontWeight: 'bold',
+                  fontSize: '1.1rem',
+                  borderRadius: '16px',
+                  border: "1px solid white",
+                  boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.25)',
+                  textTransform: 'none',
+                  padding: '10px 20px',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                    boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.35)',
+                    backgroundImage: 'linear-gradient(225deg, #ff0080 0%, #7928ca 50%, #2b86c5 100%)',
+                  },
+                }}
+                onClick={() => navigate('/suggest-recipes')}
+              >
+                Suggest Recipes
+              </Button>
+            </Box>
       {/* SEARCHBAR, BUTTON, LIST */}
-      <Box sx={{width: '55%', marginLeft: '20%', marginTop: '3%', }}>
-            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
-              {/* SEARCHBAR */}
+      <Box sx={{width: '65%', marginLeft: '17%' }}>
+      
+            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              {/* UPLOAD BUTTON */}
+                <Box>
+                  <Button
+                    variant="contained"
+                    startIcon={<ImageIcon />}
+                    onClick={() => setOpenOcrDialog(true)}
+                    sx={{
+                      backgroundColor: '#ff3cac',
+                      backgroundImage: 'linear-gradient(225deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%)',
+                      color: '#fff',
+                      fontWeight: 'bolder',
+                      paddingY: 1,
+                      paddingX: 2.5,
+                      marginTop: '8px',
+                      borderRadius: '30px',
+                      border: "1px solid white",
+                      boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.25)',
+                      textTransform: 'none',
+                      transition: 'all 0.3s ease-in-out',
+                      '&:hover': {
+                        transform: 'scale(1.05)',
+                        boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.35)',
+                        backgroundImage: 'linear-gradient(225deg, #ff0080 0%, #7928ca 50%, #2b86c5 100%)',
+                      }
+                    }}
+                  >
+                  </Button>
+                </Box>
+                {/* SEARCH BAR */}
                 <Box>
                   <Autocomplete
                     options={ingredients}
@@ -169,21 +232,26 @@ const GroceryList = () => {
                   )}
                 </Box>
 
-              {/* ADD-ITEM BUTTON */}
-              <Box>
-              <Button
-                className={"button add-item"}
-                onClick={handleAddItem}
-                sx={{
-                  border: '1px solid white',
-                  marginTop: '8px',
-                  marginRight: '30px',
-                }}
-              >
-                Add Item
-              </Button>
-              </Box>
+                {/* ADD-ITEM BUTTON */}
+                <Box>
+                <Button
+                  className={"button add-item"}
+                  onClick={handleAddItem}
+                  sx={{
+                    border: '1px solid white',
+                    marginTop: '8px',
+                    marginRight: '30px',
+                  }}
+                >
+                  Add Item
+                </Button>
+                </Box>
             </Box>
+            <OcrGroceryUpload2
+              open={openOcrDialog}
+              onClose={() => setOpenOcrDialog(false)}
+            />
+
 
             {/* GROCERY ITEMS LIST */}
                   {groceryItems.length > 0 ? (
@@ -215,27 +283,11 @@ const GroceryList = () => {
                 ) : (
                   <p class='add-item-to-view-list'>No items found.<br></br> Start Adding Items!</p>
                 )}
-                {/* Delete Confirmation Dialog */}
-                {/* <Dialog open={openDialog} onClose={handleCloseDialog}>
-                    <DialogTitle>Confirm Deletion</DialogTitle>
-                    <DialogContent>
-                        Are you sure you want to delete this item?
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleCloseDialog} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={handleConfirmDelete} color="secondary">
-                            Confirm
-                        </Button>
-                    </DialogActions>
-                </Dialog> */}
                 <ConfirmDeleteDialog
                         open={openDialog}
                         onCancel={() => setOpenDialog(false)}
                         onConfirm={handleConfirmDelete}
                       />
-                {/* <ToastContainer /> */}
             </Box>
         </Container>
     );

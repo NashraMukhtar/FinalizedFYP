@@ -6,7 +6,7 @@
     background: url('BACK3.png'), linear-gradient(135deg, #8DB3E4, #EC6885, #8167C4, #E3CA65);
     background-size: contain;
     background-position: center;
-    background-repeat: repeat;
+    background-repeat: repeat-y;
   }
 
 /* General Button Style */
@@ -75,7 +75,7 @@
   .bouncing-txt{
     text-align: center;
     display: inline-block;
-    text-shadow: 4px 4px 6px rgba(128, 128, 128, 0.7);
+    text-shadow: 6px 6px 4px rgb(91, 87, 87);
     animation: bounce 1.5s infinite ease-in-out;
   }
     @keyframes bounce {
@@ -110,4 +110,9 @@
     box-shadow: 0 4px 20px #fff;
     color:#fff;
     background-color: #FFBF00;
+  }
+
+  .user-management-table-header{
+    color: white;
+    text-shadow: 2px 2px 4px rgba(50, 50, 50, 0.7);
   }

@@ -77,9 +77,9 @@ export default function UserNavbar() {
           <Logout onClose={handleDialogClose} />
         </Dialog>
 
-        <Link to="/suggest-recipes"style={{textDecoration:"none", paddingTop:"8px"}}>
+        <Link to="/home"style={{textDecoration:"none", paddingTop:"8px"}}>
             <Button className={"button nav-btn"} style={{border:"1px solid white",}}>
-            Suggest Recipe
+            Home
             </Button>
         </Link>
       </div>
@@ -91,11 +91,11 @@ export default function UserNavbar() {
             display:"flex",
             }}>
 
-        <Link to="/home" style={{textDecoration:"none",}}>
+        {/* <Link to="/grocery-list" style={{textDecoration:"none",}}>
             <Button className={"button nav-btn"} sx={{border:"1px solid white",}}>
                 Grocery List
             </Button>
-        </Link>
+        </Link> */}
         <Link to="/shopping-list" style={{textDecoration:"none",}}>
             <Button className={"button nav-btn"} sx={{border:"1px solid white",}}>
                 Shopping List

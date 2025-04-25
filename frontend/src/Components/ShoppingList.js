@@ -259,7 +259,6 @@ const ShoppingList2 = () => {
                         </Button>
                     </DialogActions>
                 </Dialog>
-                {/* <ToastContainer /> */}
             </Box>
         </Container>
     );

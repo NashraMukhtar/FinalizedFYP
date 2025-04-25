@@ -12,7 +12,7 @@ const ConfirmDeleteDialog = ({ open, onCancel, onConfirm }) => (
   <Dialog open={open} onClose={onCancel}>
     <DialogTitle>Confirm Delete</DialogTitle>
     <DialogContent>
-      <Typography>Are you sure you want to delete this recipe?</Typography>
+      <Typography>Are you sure you want to delete?</Typography>
     </DialogContent>
     <DialogActions>
       <Button onClick={onCancel}>Cancel</Button>

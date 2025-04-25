@@ -12,8 +12,13 @@ import AdminNavbar from './Components/AdminNavbar';
 import Unauthorized from './Components/Unauthorized';
 import AllRecipes from './Components/AllRecipesUsersPage';
 import RecipeManagementPage from './Components/RecipeManagementPage';
+import AdminUserManagement from './Components/AdminUserManagementPage';
+import IngredientManagement from './Components/AdminIngredientManagement';
+// import UserHomePage from './Components/UserHomePage';
+import OcrGroceryUpload2 from './Components/OcrGroceryUpload2';
 
 function App() {
+
   return (
     <AuthProvider>
       <Router>
@@ -21,6 +26,9 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/ocr-upload" element={<OcrGroceryUpload2 />} />
+
+
 
           {/* <Route element={<ProtectedRoute />}>
             <Route path="/logout" element={<Logout />} />
@@ -34,6 +42,7 @@ function App() {
           {/* Protected routes */}
           <Route element={<ProtectedRoute userOnly={true} />}>
             <Route path="/home" element={<GroceryList />} />
+            {/* <Route path="/home" element={<UserHomePage />} /> */}
           </Route>
 
           {/* Protected routes */}
@@ -58,6 +67,16 @@ function App() {
             {/* Admin-only routes */}
             <Route element={<ProtectedRoute adminOnly={true} />}>
             <Route path="/admin/recipes" element={<RecipeManagementPage />} />
+          </Route>
+
+          {/* Admin-only routes */}
+          <Route element={<ProtectedRoute adminOnly={true} />}>
+            <Route path="/admin/users" element={<AdminUserManagement />} />
+          </Route>
+
+          {/* Admin-only routes */}
+          <Route element={<ProtectedRoute adminOnly={true} />}>
+            <Route path="/admin/ingredients" element={<IngredientManagement />} />
           </Route>
 
           {/* <Route path="/" exact element={<Home />} /> //public route */}
