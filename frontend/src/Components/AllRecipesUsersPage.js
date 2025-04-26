@@ -87,7 +87,10 @@ const AllRecipes = () => {
                             }}>
                                 <CardContent>
                                     <Typography variant="h5" fontWeight="bold">{recipe.name}</Typography>
-                                    <Typography variant="body2">{recipe.description}</Typography>
+                                    <Typography variant="body2">
+                                    {recipe.description.split(" ").slice(0, 3).join(" ") + (recipe.description.split(" ").length > 3 ? "..." : "")}
+                                    </Typography>
+                                    <Typography variant="body2">Category: {recipe.category_name}</Typography>
                                 </CardContent>
                             </Card>
                         </Grid>
@@ -111,9 +114,14 @@ const AllRecipes = () => {
 
                 <DialogContent sx={{ padding: '20px', backgroundColor: '#f5f5f5', paddingLeft: '50px', height: '300px', overflowY: 'auto', }}>
                     {/* Category */}
-                    <Typography variant="h6" mt={5} sx={{ marginBottom: '10px', color: '#333' }}>
+                    <Typography variant="body2" mt={3} sx={{ marginBottom: '10px', color: '#333' }}>
+                    <strong>Category: {selectedRecipe?.category_name}</strong>
+                    </Typography>
+                    
+                    <Typography variant="h6" mt={4} sx={{ marginBottom: '10px', color: '#333' }}>
                     <strong>Description:<br></br></strong> {selectedRecipe?.description}
                     </Typography>
+
 
                     {/* Ingredients */}
                     <Typography variant="h6" mt={2} sx={{color: '#333'}}><strong>Ingredients:</strong></Typography>

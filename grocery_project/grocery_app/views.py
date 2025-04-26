@@ -84,8 +84,12 @@ class IngredientListCreateView(generics.ListCreateAPIView):
     serializer_class = IngredientSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAdminUserOrReadOnly]
 
-    def get_queryset(self):
-        return Ingredient.objects.all()
+    def create(self, request, *args, **kwargs):
+        is_many = isinstance(request.data, list)
+        serializer = self.get_serializer(data=request.data, many=is_many)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # Retrieve, Update, and Delete Ingredients
 class IngredientDetailView(generics.RetrieveUpdateDestroyAPIView):

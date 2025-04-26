@@ -6,7 +6,7 @@ from .models import GroceryItem, RecipeCategory, Recipe, Ingredient, RecipeIngre
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
-        fields = ['id', 'name']
+        fields = '__all__'
 
 class GroceryItemSerializer(serializers.ModelSerializer):
     ingredient = serializers.PrimaryKeyRelatedField(queryset=Ingredient.objects.all())
@@ -63,10 +63,14 @@ class RecipeCategorySerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     recipe_ingredients = RecipeIngredientSerializer(many=True, required=False)
     created_by = serializers.StringRelatedField(read_only=True)
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=RecipeCategory.objects.all(), write_only=True
+    )
+    category_name = serializers.StringRelatedField(source='category', read_only=True)
 
     class Meta:
         model = Recipe
-        fields = ['id', 'name', 'description', 'category', 'steps', 'recipe_ingredients', 'created_by',]
+        fields = ['id', 'name', 'description', 'category', 'category_name', 'steps', 'recipe_ingredients', 'created_by',]
 
     def create(self, validated_data):
         ingredients_data = validated_data.pop('recipe_ingredients', [])

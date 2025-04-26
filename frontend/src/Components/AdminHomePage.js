@@ -107,7 +107,7 @@ const AdminLandingPage = () => {
           <BarChart data={data} margin={{ top: 20, right: 30, left: 10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis allowDecimals={false} />
+            <YAxis allowDecimals={false} domain={[0, 35]} />
             <Tooltip 
             contentStyle={{
               backgroundColor: '#2c2c2c',

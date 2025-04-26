@@ -11,7 +11,7 @@ import AdminHomePage from './Components/AdminHomePage';
 import AdminNavbar from './Components/AdminNavbar';
 import Unauthorized from './Components/Unauthorized';
 import AllRecipes from './Components/AllRecipesUsersPage';
-import RecipeManagementPage from './Components/RecipeManagementPage';
+import AdminRecipePage from './Components/AdminRecipePage';
 import AdminUserManagement from './Components/AdminUserManagementPage';
 import IngredientManagement from './Components/AdminIngredientManagement';
 // import UserHomePage from './Components/UserHomePage';
@@ -66,7 +66,7 @@ function App() {
 
             {/* Admin-only routes */}
             <Route element={<ProtectedRoute adminOnly={true} />}>
-            <Route path="/admin/recipes" element={<RecipeManagementPage />} />
+            <Route path="/admin/recipes" element={<AdminRecipePage />} />
           </Route>
 
           {/* Admin-only routes */}

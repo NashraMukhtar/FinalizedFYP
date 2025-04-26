@@ -26,7 +26,7 @@ import ingredientAPI from "../APIs/ingredientAPI";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 // import AdminNavbar from "./AdminNavbar";
 
-const RecipeManagementPage = () => {
+const AdminRecipePage = () => {
   const [recipes, setRecipes] = useState([]);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [recipeToDelete, setRecipeToDelete] = useState(null);
@@ -36,11 +36,12 @@ const RecipeManagementPage = () => {
     name: "",
     description: "",
     steps: "",
-    category: 1,
+    category: "",
     recipe_ingredients: [],
   });
   const [ingredientList, setIngredientList] = useState([]);
   const [ingredientMap, setIngredientMap] = useState({});
+  const [categoryList, setCategoryList] = useState([]);
 
 
   // Modern Industrial Colors
@@ -75,9 +76,12 @@ const RecipeManagementPage = () => {
     fetchIngredients();
   }, []);
 
-  // Fetch all recipes on load
   useEffect(() => {
     fetchRecipes();
+  }, []);
+
+  useEffect(() => {
+    fetchCategories();
   }, []);
 
   const fetchRecipes = async () => {
@@ -87,6 +91,16 @@ const RecipeManagementPage = () => {
     } catch (error) {
       console.error("Error fetching recipes:", error);
       setRecipes([]); // fallback to prevent undefined error
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const res = await recipeAPI.getCategories();
+      console.log(res);
+      setCategoryList(res);
+    } catch (error) {
+      console.error("Failed to fetch categories", error);
     }
   };
 
@@ -146,6 +160,10 @@ const RecipeManagementPage = () => {
         toast.error("Please add Steps.");
         return;
       }
+      if (!currentRecipe.category) {
+        toast.error("Please select Category.");
+        return;
+      }
 
       const token = localStorage.getItem("token");
   
@@ -153,7 +171,7 @@ const RecipeManagementPage = () => {
         name: currentRecipe.name,
         description: currentRecipe.description,
         steps: currentRecipe.steps,
-        category: currentRecipe.category || 1,
+        category: currentRecipe.category,
         recipe_ingredients: currentRecipe.recipe_ingredients || [],
       };
 
@@ -210,7 +228,7 @@ const RecipeManagementPage = () => {
         </Button>
       </Box>
 
-      {/* Recipe Grid */}
+      {/* Recipe DISPLAY Grid */}
       <Grid container spacing={3}
       sx={{width: '85%', marginLeft: '6%',}}
       >
@@ -232,7 +250,7 @@ const RecipeManagementPage = () => {
                   {recipe.name}
                 </Typography>
                 <Typography variant="body2" mb={2}>
-                  {recipe.description}
+                  {recipe.description.split(" ").slice(0, 3).join(" ") + (recipe.description.split(" ").length > 3 ? "..." : "")}
                 </Typography>
                 <Box display="flex" justifyContent="space-between">
                   <IconButton color="primary" onClick={() => handleEdit(recipe)}>
@@ -278,6 +296,27 @@ const RecipeManagementPage = () => {
             value={currentRecipe.description || ""}
             onChange={(e) => setCurrentRecipe({ ...currentRecipe, description: e.target.value })}
           />
+
+          {/* Category Select */}
+          <FormControl margin="dense" fullWidth>
+            <InputLabel id="category-label">Select Category</InputLabel>
+            <Select
+              labelId="category-label"
+              value={currentRecipe.category || ""}
+              onChange={(e) => setCurrentRecipe({ ...currentRecipe, category: e.target.value })}
+              label="Select Category"
+            >
+              <MenuItem value="" disabled>
+                Select a category
+              </MenuItem>
+              {categoryList.map((cat) => (
+                <MenuItem key={cat.id} value={cat.id}>
+                  {cat.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
 
           {/* Steps */}
           <TextField
@@ -365,4 +404,4 @@ const RecipeManagementPage = () => {
   );
 };
 
-export default RecipeManagementPage;
+export default AdminRecipePage;

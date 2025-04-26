@@ -71,6 +71,14 @@ const recipeAPI = {
       console.log(err);
     }
   },
+  getCategories: async () => {
+    try {
+      const res = await Axios.get(`${API_URL}categories/`);
+      return res.data;
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 
 export default recipeAPI;

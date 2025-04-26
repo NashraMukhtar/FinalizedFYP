@@ -10,7 +10,7 @@ const groceryAPI = {
           Authorization: `Token ${token}`,
         },
         params: { offset: offset, limit: limit },
-      }); // Check the format of the response
+      });
       return res.data;
     } catch (err) {
       throw err;
