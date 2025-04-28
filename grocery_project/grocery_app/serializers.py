@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import GroceryItem, RecipeCategory, Recipe, Ingredient, RecipeIngredient, ShoppingItem
+from .models import GroceryItem, RecipeCategory, Recipe, Ingredient, RecipeIngredient, ShoppingItem, RecipeRequest
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -104,3 +104,18 @@ class RecipeSerializer(serializers.ModelSerializer):
             RecipeIngredient.objects.create(ingredient=ingredient, recipe=instance)
 
         return instance
+
+class RecipeRequestSerializer(serializers.ModelSerializer):
+    ingredients = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Ingredient.objects.all()
+    )
+    user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = RecipeRequest
+        fields = '__all__'
+        read_only_fields = ['user', 'submitted_at']
+
+    def get_user(self, obj):
+        return obj.user.username

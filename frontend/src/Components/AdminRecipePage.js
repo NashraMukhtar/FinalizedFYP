@@ -60,14 +60,12 @@ const AdminRecipePage = () => {
         const res = await ingredientAPI.getIngredients(token);
   
         setIngredientList(res);
-        console.log(res);
   
         const map = {};
         res.forEach(item => {
           map[item.id] = item.name;
         });
         setIngredientMap(map);
-        console.log("ingredientMap:", ingredientMap);
       } catch (err) {
         console.error("Failed to fetch ingredients:", err);
       }

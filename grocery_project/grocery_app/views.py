@@ -1,10 +1,13 @@
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
+
 from rest_framework.decorators import api_view, permission_classes  
 from rest_framework import generics, status
 from core.permissions import IsAdminUserOrReadOnly, IsOwnerOrReadOnly,IsOwnerOrAdminOrReadOnly
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from .models import GroceryItem, RecipeCategory, Recipe, RecipeIngredient, Ingredient, ShoppingItem
-from .serializers import GroceryItemSerializer, RecipeCategorySerializer, RecipeSerializer, IngredientSerializer, RecipeIngredientSerializer, ShoppingItemSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
+from .models import GroceryItem, RecipeCategory, Recipe, RecipeIngredient, Ingredient, ShoppingItem, RecipeRequest
+from .serializers import GroceryItemSerializer, RecipeCategorySerializer, RecipeSerializer, IngredientSerializer, RecipeIngredientSerializer, ShoppingItemSerializer, RecipeRequestSerializer
 
 
 # List and Create Grocery Items for the authenticated user
@@ -207,4 +210,47 @@ def move_to_grocery_list(request, pk):
     return Response({"success": "Item moved to grocery list."}, status=status.HTTP_200_OK)
 
 
+class CreateRecipeRequestView(generics.CreateAPIView):
+    queryset = RecipeRequest.objects.all()
+    serializer_class = RecipeRequestSerializer
+    permission_classes = [IsAuthenticated]
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class RecipeRequestListView(generics.ListAPIView):
+    queryset = RecipeRequest.objects.all()
+    serializer_class = RecipeRequestSerializer
+    permission_classes = [IsAdminUser]
+
+class RecipeRequestActionView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def post(self, request, pk, action):
+        recipe_request = get_object_or_404(RecipeRequest, pk=pk)
+
+        if action == 'approve':
+            # Create the new Recipe
+            recipe = Recipe.objects.create(
+                name=recipe_request.title,
+                description=recipe_request.description,
+                steps=recipe_request.instructions,
+                category=recipe_request.category,  # Since RecipeRequest has no category
+                created_by=request.user
+            )
+
+            # Link the ingredients
+            for ingredient in recipe_request.ingredients.all():
+                RecipeIngredient.objects.create(recipe=recipe, ingredient=ingredient)
+
+            # Delete the original request
+            recipe_request.delete()
+
+            return Response({"message": "Recipe approved and added successfully!"}, status=status.HTTP_201_CREATED)
+
+        elif action == 'reject':
+            recipe_request.delete()
+            return Response({"message": "Recipe request rejected and deleted successfully!"}, status=status.HTTP_200_OK)
+
+        else:
+            return Response({"error": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)

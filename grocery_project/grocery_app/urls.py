@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import GroceryItemListCreateView, GroceryItemDetailView, RecipeCategoryListCreateView, RecipeCategoryDetailView, RecipeListCreateView, RecipeDetailView, suggest_recipes, IngredientListCreateView, IngredientDetailView, RecipeIngredientListCreateView, RecipeIngredientDetailView, ShoppingItemListCreateView, move_to_grocery_list, ShoppingItemDetailView, UserRecipeListView
+from .views import CreateRecipeRequestView, GroceryItemListCreateView, GroceryItemDetailView, RecipeCategoryListCreateView, RecipeCategoryDetailView, RecipeListCreateView, RecipeDetailView, suggest_recipes, IngredientListCreateView, IngredientDetailView, RecipeIngredientListCreateView, RecipeIngredientDetailView, ShoppingItemListCreateView, move_to_grocery_list, ShoppingItemDetailView, UserRecipeListView, RecipeRequestListView, RecipeRequestActionView
 
 urlpatterns = [
     path('grocery-items/', GroceryItemListCreateView.as_view(), name='grocery-list-create'),
@@ -23,4 +23,9 @@ urlpatterns = [
     path('my-recipes/', UserRecipeListView.as_view(), name='user-recipes'),
 
     path('suggest-recipes/', suggest_recipes, name='suggest-recipes'),
+
+    path('recipe-requests/', RecipeRequestListView.as_view(), name='recipe-requests'),
+    path('recipe-requests/<int:pk>/<str:action>/', RecipeRequestActionView.as_view(), name='recipe-request-action'),
+    path('submit-recipe-request/', CreateRecipeRequestView.as_view(), name='submit-recipe-request'),
+
 ]

@@ -79,6 +79,54 @@ const recipeAPI = {
       throw err;
     }
   },
+  getRecipeRequests: async (token) => {
+    try {
+      const res = await Axios.get(`${API_URL}recipe-requests/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      return res.data;
+    } catch (err) {
+      throw err;
+    }
+  },
+  createRequest: async (recipe, token) => {
+    try {
+      const res = await Axios.post(`${API_URL}submit-recipe-request/`, recipe, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      return res.data;
+    } catch (err) {
+      throw err;
+    }
+  },
+  approveRecipe: async (id, token) => {
+    try {
+      const res = await Axios.post(`${API_URL}recipe-requests/${id}/approve/`, {}, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      return res.data;
+    } catch (err) { 
+      throw err;
+    }
+  },
+  rejectRecipe: async (id, token) => {
+    try {
+      const res = await Axios.post(`${API_URL}recipe-requests/${id}/reject/`, {}, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      return res.data;
+    } catch (err) { 
+      throw err;
+    }
+  },
 };
 
 export default recipeAPI;

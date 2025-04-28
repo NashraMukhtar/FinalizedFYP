@@ -64,7 +64,7 @@ export default function AdminNavbar () {
         gap: "16px",
         paddingRight: "10px",
       }}>
-        <Link to="/admin/dashboard">
+        <Link to="/admin/requests">
           <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3', marginTop: '6px'}}>Requests</Button>
         </Link>
 

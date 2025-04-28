@@ -17,7 +17,6 @@ class Ingredient(models.Model):
 class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     recipe = models.ForeignKey('Recipe', related_name='recipe_ingredients', on_delete=models.CASCADE)
-    # quantity = models.CharField(max_length=100, blank=True)  # Optional field for quantity in the recipe
 
     def __str__(self):
         return f"{self.ingredient.name} for {self.recipe.name}"
@@ -45,3 +44,12 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
+
+class RecipeRequest(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    category = models.ForeignKey(RecipeCategory, on_delete=models.SET_NULL, null=True, blank=True)
+    ingredients = models.ManyToManyField(Ingredient)
+    instructions = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)

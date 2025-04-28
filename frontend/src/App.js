@@ -14,8 +14,7 @@ import AllRecipes from './Components/AllRecipesUsersPage';
 import AdminRecipePage from './Components/AdminRecipePage';
 import AdminUserManagement from './Components/AdminUserManagementPage';
 import IngredientManagement from './Components/AdminIngredientManagement';
-// import UserHomePage from './Components/UserHomePage';
-import OcrGroceryUpload2 from './Components/OcrGroceryUpload2';
+import AdminRecipeRequestsPage from './Components/AdminRecipeRequestsPage';
 
 function App() {
 
@@ -26,13 +25,6 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="/ocr-upload" element={<OcrGroceryUpload2 />} />
-
-
-
-          {/* <Route element={<ProtectedRoute />}>
-            <Route path="/logout" element={<Logout />} />
-          </Route> //auth protection */}
 
           {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
@@ -72,6 +64,11 @@ function App() {
           {/* Admin-only routes */}
           <Route element={<ProtectedRoute adminOnly={true} />}>
             <Route path="/admin/users" element={<AdminUserManagement />} />
+          </Route>
+
+          {/* Admin-only routes */}
+          <Route element={<ProtectedRoute adminOnly={true} />}>
+            <Route path="/admin/requests" element={<AdminRecipeRequestsPage />} />
           </Route>
 
           {/* Admin-only routes */}
