@@ -48,7 +48,6 @@ const AdminUserManagement = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await authAPI.getUserActivity(token, userId);
-      console.log(res);
       setSelectedUserActivity(res);
       setActivityDialogOpen(true);
     } catch (err) {

@@ -12,12 +12,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Load user details if token exists
     if (token) {
-      console.log(token)
       setLoading(true);
       authAPI.getUserDetails(token)
         .then((data) => {
           setUser(data);
-          console.log(data);
           setIsUserAdmin(data.role === "admin"); // Check if the user is admin
         })
         .catch(() => setUser(null))
@@ -36,7 +34,6 @@ export const AuthProvider = ({ children }) => {
       const userData = await authAPI.getUserDetails(data.token);
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("role", JSON.stringify(userData.role));
-      console.log(userData.role);
       setUser(userData);
       setIsUserAdmin(userData.role === "admin");
     }

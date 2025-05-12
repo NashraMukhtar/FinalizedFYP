@@ -95,7 +95,6 @@ const AdminRecipePage = () => {
   const fetchCategories = async () => {
     try {
       const res = await recipeAPI.getCategories();
-      console.log(res);
       setCategoryList(res);
     } catch (error) {
       console.error("Failed to fetch categories", error);

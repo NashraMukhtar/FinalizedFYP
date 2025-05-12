@@ -68,7 +68,7 @@ const recipeAPI = {
       });
       return res.data;
     } catch (err) {
-      console.log(err);
+      throw(err);
     }
   },
   getCategories: async () => {

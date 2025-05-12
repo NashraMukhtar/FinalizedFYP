@@ -21,7 +21,6 @@ const Login = () => {
         position: 'top-right',
       });
       const role = localStorage.getItem('role');
-      console.log(role);
       if (role === '"admin"') {
         navigate('/admin-panel'); // Redirect admin to Ingredients page
       }else{

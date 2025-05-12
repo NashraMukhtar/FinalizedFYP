@@ -32,7 +32,6 @@ const AdminRecipeRequestsPage = () => {
     try {
       const token = localStorage.getItem('token');
       const res = await recipeAPI.getRecipeRequests(token);
-      console.log(res);
       setRequests(res);
     } catch (error) {
       console.error(error);

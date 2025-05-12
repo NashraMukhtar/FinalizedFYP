@@ -11,7 +11,7 @@ const authAPI = {
         });
         return res.data;
       } catch (err) {
-        console.log(err);
+        throw(err);
       }
     },
     register: async (username, email, password) => {
@@ -23,7 +23,6 @@ const authAPI = {
         });
         return res.data;
       } catch (err) {
-        console.log(err);
         throw err;
       }
     },
@@ -42,7 +41,6 @@ const authAPI = {
         });
         return res.data;
       } catch (err) {
-        // console.log(err);
         throw err;
       }
     },

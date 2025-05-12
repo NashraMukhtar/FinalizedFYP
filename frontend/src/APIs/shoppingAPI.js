@@ -36,7 +36,7 @@ const shoppingAPI = {
       });
       return res.data;
     } catch (err) {
-      console.log("from shoppingAPI:",err);
+      throw(err);
     }
   },
   deleteShoppingItem: async (id, token) => {
@@ -48,7 +48,7 @@ const shoppingAPI = {
       });
       return res.data;
     } catch (err) {
-      console.log("from shoppingAPI:",err);
+      throw(err);
     }
   },
   moveToGroceryList: async (id, token) => {

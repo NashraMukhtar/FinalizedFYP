@@ -67,7 +67,6 @@ const OcrGroceryUpload2 = ({ open, onClose }) => {
   };
 
   const handleAddToGroceryList = async (item) => {
-    console.log("Clicked Add button for:", item.match);
 
     const token = localStorage.getItem("token");
     const matchName = item.match.toLowerCase();
@@ -75,8 +74,6 @@ const OcrGroceryUpload2 = ({ open, onClose }) => {
     const ingredient = ingredients.find(
       (i) => i.name.toLowerCase() === matchName
     );
-
-    console.log("Matching Ingredient:", ingredient);
   
     if (!ingredient) {
       toast.error(`Ingredient "${item.match}" not found`);
@@ -89,9 +86,7 @@ const OcrGroceryUpload2 = ({ open, onClose }) => {
     }
   
     try {
-      console.log("Sending request to add item:", { ingredient: ingredient.id });
       const res = await groceryAPI.addGroceryItem({ ingredient: ingredient.id }, token);
-      console.log("Response:", res);
   
       if (res.status === 201) {
         toast.success(`"${item.match}" added to grocery list`);
