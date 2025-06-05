@@ -75,3 +75,6 @@ npm start
 Nashra Mukhtar,
 Final Year Project – Lahore College for Women University,
 [LinkedIn](https://www.linkedin.com/in/nashra-mukhtar-253565279/)
+
+📌 License
+This project is for academic purposes. All rights reserved © Nashra Mukhtar, 2025.
