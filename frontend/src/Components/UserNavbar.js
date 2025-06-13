@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, MenuItem, IconButton, Dialog, Button } from "@mui/material";
+import { Menu, MenuItem, IconButton, Dialog, Button, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import { AccountCircle } from "@mui/icons-material";
 import "../App.css";
@@ -41,7 +41,7 @@ export default function UserNavbar() {
       {/* PROFILE DROPDOWN */}
       <div style={{
             gap: "18px",
-            display:"flex",
+            display:"flex"
             }}>
         <IconButton onClick={handleClick} size="large"
         sx={{
@@ -82,6 +82,9 @@ export default function UserNavbar() {
             Home
             </Button>
         </Link>
+        <Typography variant="h4" style={{color:"white", paddingTop:"20px", fontSize:"21px", paddingLeft:"50px", textShadow: "6px 6px 4px rgb(91, 87, 87)", fontFamily: "'Luckiest Guy', static",}}>
+          Grocery Management with Recipe Suggestion
+        </Typography>
       </div>
       
       {/* NAVIGATION BUTTONS */}
@@ -106,7 +109,17 @@ export default function UserNavbar() {
                 All Recipes
             </Button>
         </Link>
+        <div style={{ marginTop: "-5px", marginRight: "-30px"}}>
+          {/* <Link to="/home" style={{border: "1px solid black", backgroundColor:"black", padding: "2px"}}> */}
+            <img 
+              src="/Logo.png" 
+              alt="Logo" 
+              style={{ height: "55px", cursor: "pointer", border: "2px solid white",borderRadius:"50%" }}
+            />
+          {/* </Link> */}
+        </div>
       </div>
+      
     </nav>
   );
 }

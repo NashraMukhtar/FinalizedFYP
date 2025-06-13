@@ -139,6 +139,7 @@ const GroceryList = () => {
         fontFamily: "'Luckiest Guy', static",
         color: "#ffffff",
         width: "100%",
+        paddingTop: "45px",
       }}>
         Your Available Items
       </Typography>

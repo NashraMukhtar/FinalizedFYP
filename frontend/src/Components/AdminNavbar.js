@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Menu, MenuItem, IconButton, Button, Dialog } from '@mui/material';
+import { Menu, MenuItem, IconButton, Button, Dialog, Typography } from '@mui/material';
 import { motion } from "framer-motion";
 import { AccountCircle } from "@mui/icons-material";
 import { useState } from 'react';
@@ -42,20 +42,19 @@ export default function AdminNavbar () {
         {/* NAV-BTNS SIDE */}
       <div style={{
         display: "flex",
-        gap: "16px",
-        width:"50%",
+        justifyContent: "space-between",
+        width:"65%",
         paddingTop:"6px",
         paddingLeft: "20px",
         }}>
-        <Link to="/admin/ingredients">
-          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3'}}>Ingredients</Button>
-        </Link>
-        <Link to="/admin/recipes">
-          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3'}}>Recipes</Button>
-        </Link>
-        <Link to="/admin/users">
-          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3'}}>Users</Button>
-        </Link>
+        <img 
+          src="/Logo.png" 
+          alt="Logo" 
+          style={{ height: "50px", cursor: "pointer", border: "2px solid white", borderRadius:"50%" }}
+        />
+        <Typography variant="h4" style={{color:"white", fontSize:"21px", paddingTop:"13px", textShadow: "6px 6px 4px rgb(91, 87, 87)", fontFamily: "'Luckiest Guy', static",}}>
+          Grocery Management with Recipe Suggestion
+        </Typography>
       </div>
 
         {/* DROPDOWN SIDE */}
@@ -65,7 +64,7 @@ export default function AdminNavbar () {
         paddingRight: "10px",
       }}>
         <Link to="/admin/requests">
-          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3', marginTop: '6px'}}>Requests</Button>
+          <Button className="admin-nav-btn" sx={{fontWeight:'bold', color: 'black', backgroundColor: '#D3D3D3', marginTop: '10px'}}>Requests</Button>
         </Link>
 
         <IconButton onClick={handleClick} size="large"
