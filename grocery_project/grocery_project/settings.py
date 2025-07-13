@@ -32,7 +32,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['your-backend.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -65,6 +65,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'https://finalized-fyp.vercel.app/',
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
@@ -72,6 +73,8 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     'Content-Type',
     'X-CSRFToken',
 ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'grocery_project.urls'
 
