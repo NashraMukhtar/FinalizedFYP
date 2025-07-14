@@ -6,7 +6,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const authAPI = {
     login: async (username, password) => {
       try {
-        const res = await Axios.post(`${API_URL}/core/login/`, {
+        const res = await Axios.post(`${API_URL}core/login/`, {
           username,
           password,
         });
@@ -17,7 +17,7 @@ const authAPI = {
     },
     register: async (username, email, password) => {
       try {
-        const res = await Axios.post(`${API_URL}/core/register/`, {
+        const res = await Axios.post(`${API_URL}core/register/`, {
           username,
         email,
         password,
@@ -28,14 +28,14 @@ const authAPI = {
       }
     },
     logout: async (username) => {
-      const res = await Axios.delete(`${API_URL}/core/logout/`, {
+      const res = await Axios.delete(`${API_URL}core/logout/`, {
         username,
       });
       return res.data;
     },
     getUserDetails: async (token) => {
       try {
-        const res = await Axios.get(`${API_URL}/core/get-user/`, {
+        const res = await Axios.get(`${API_URL}core/get-user/`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -47,7 +47,7 @@ const authAPI = {
     },
     getAllUsers: async(token) => {
       try{
-        const res = await Axios.get(`${API_URL}/core/all-users/`, {
+        const res = await Axios.get(`${API_URL}core/all-users/`, {
           headers: { Authorization: `Token ${token}` },
         });
         return res.data;
@@ -57,7 +57,7 @@ const authAPI = {
     },
     getUserActivity: async(token, userId) => {
       try {
-        const res = await Axios.get(`${API_URL}/core/users/${userId}/activity/`, {
+        const res = await Axios.get(`${API_URL}core/users/${userId}/activity/`, {
           headers: { Authorization: `Token ${token}` },
         });
         return res.data;
@@ -67,7 +67,7 @@ const authAPI = {
     },
     deleteUser: async(token, userId) => {
       try {
-        const res = await Axios.delete(`${API_URL}/core/users/${userId}/delete/`, {
+        const res = await Axios.delete(`${API_URL}core/users/${userId}/delete/`, {
           headers: { Authorization: `Token ${token}` },
         });
         return res.data;
@@ -77,7 +77,7 @@ const authAPI = {
     },
     getDashboardCounts: async(token) => {
       try {
-        const res = await Axios.get(`${API_URL}/core/dashboard-counts/`, {
+        const res = await Axios.get(`${API_URL}core/dashboard-counts/`, {
           headers: { Authorization: `Token ${token}` },
         });
         return res.data;
@@ -87,7 +87,7 @@ const authAPI = {
     },
     extractGrocery: async (token, formData) => {
       try {
-        const res = await Axios.post(`${API_URL}/core/extract-grocery/`, formData, {
+        const res = await Axios.post(`${API_URL}core/extract-grocery/`, formData, {
           headers: {
             Authorization: `Token ${token}`,
           },
