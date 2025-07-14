@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 // const API_URL = 'http://localhost:8000/';
-const API_URL = 'https://finalizedfyp.onrender.com/';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const groceryAPI = {
   getGroceryItems: async (token, offset, limit) => {
