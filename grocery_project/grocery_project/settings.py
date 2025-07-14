@@ -33,7 +33,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['your-backend.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['finalizedfyp.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
