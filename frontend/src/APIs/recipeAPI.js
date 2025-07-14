@@ -1,6 +1,7 @@
 import Axios from "axios";
 
-const API_URL = 'http://localhost:8000/';
+// const API_URL = 'http://localhost:8000/';
+const API_URL = 'https://finalizedfyp.onrender.com/';
 
 const recipeAPI = {
   getRecipes: async () => {
