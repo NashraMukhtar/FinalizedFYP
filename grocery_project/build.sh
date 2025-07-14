@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-# Install dependencies
+echo "⏳ Installing requirements..."
 pip install -r requirements.txt
 
-# Run migrations
+echo "⚙️ Running makemigrations..."
 python manage.py makemigrations
+
+echo "🚀 Running migrate..."
 python manage.py migrate
+
+echo "✅ Done running migrations"
 
 # Collect static files (optional but recommended)
 python manage.py collectstatic --noinput
