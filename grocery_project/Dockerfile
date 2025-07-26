@@ -24,4 +24,6 @@ RUN pip install -r requirements.txt
 RUN python manage.py collectstatic --noinput
 
 # Start app with gunicorn
-CMD ["gunicorn", "grocery_project.wsgi:application", "--bind", "0.0.0.0:8000"]
+# CMD ["gunicorn", "grocery_project.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn grocery_project.wsgi:application --bind 0.0.0.0:8000"]
+
