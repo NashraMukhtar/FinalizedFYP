@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { TextField, Button, Container, Typography } from '@mui/material';
+import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
@@ -39,18 +39,22 @@ const Login = () => {
 
   return (
     <Container
-    maxWidth="false"
+    maxWidth={false}
     className='gradient-bg'
     style={{
       margin: '-8px',
+      padding: 0,
     }}
     >
       <Container
       maxWidth ="xs"
       style={{
-        padding: '30px',
+        padding: '20px',
         borderRadius: '25px',
         minHeight: '500px',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(5px)',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
       }}
       >
       <ToastContainer />
@@ -58,13 +62,34 @@ const Login = () => {
         <Register toggleRegister={toggleRegister} />
       ) : (
         <>
-          <Typography
-            variant="h4"
-            className="bouncing-txt"
-            style={{ color: '#fff', paddingTop: '100px', fontFamily: "'Luckiest Guy', static", width: '100%', fontSize: '3rem', }}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
           >
-            Login
-          </Typography>
+            <Typography
+              variant="h4"
+              className="bouncing-txt"
+              sx={{
+              color: '#fff',
+              fontFamily: "'Luckiest Guy', cursive",
+              textAlign: 'center',
+              fontSize: {
+                xs: '2.2rem',
+                sm: '2.8rem',
+                md: '3rem',
+              },
+              paddingTop: {
+                xs: '60px',
+                sm: '80px',
+                md: '100px',
+              },
+            }}
+            >
+              Login
+            </Typography>
+          </Box>
           <form onSubmit={handleLogin} style={{ marginTop: '20px' }}>
             <TextField
               label="Username"
@@ -94,7 +119,18 @@ const Login = () => {
             </Button>
             <Typography
               variant="body2"
-              style={{ textAlign: 'center', marginTop: '10px', cursor: 'pointer', color: '#fff', fontSize: '1rem',fontWeight: 'bold', textShadow: '5px 5px 13px #666666', }}
+              sx={{
+                textAlign: 'center',
+                marginTop: '10px',
+                cursor: 'pointer',
+                color: '#fff',
+                fontSize: {
+                  xs: '0.9rem',
+                  sm: '1rem',
+                },
+                fontWeight: 'bold',
+                textShadow: '5px 5px 13px #666666',
+              }}
               onClick={toggleRegister}
             >
               Don't have an account? Register Here

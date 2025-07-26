@@ -1,13 +1,22 @@
 .gradient-bg {
     min-height: 100vh; 
-    /* Light one */
-    /* background: linear-gradient(135deg, #adc6eb, #f18ea3, #957ecd, #e7d27e); */
-    /* Dark one */
     background: url('BACK3.png'), linear-gradient(135deg, #8DB3E4, #EC6885, #8167C4, #E3CA65);
     background-size: contain;
     background-position: center;
     background-repeat: repeat-y;
   }
+
+  @media (max-width: 600px) {
+  .bouncing-txt {
+    font-size: 2rem !important;
+    padding-top: 60px !important;
+  }
+
+  .add-item {
+    font-size: 0.9rem !important;
+    padding: 8px 16px !important;
+  }
+}
 
 /* General Button Style */
  .button {
@@ -25,7 +34,6 @@
   /* Add Item Button */
   .add-item {
     background: linear-gradient(135deg, #e9496c, #d7b428);
-    /* box-shadow: 0 4px 15px rgba(236, 104, 133, 0.5); */
     box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.3);
   }
   
