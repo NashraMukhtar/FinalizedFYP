@@ -21,9 +21,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Collect static files (optional if using static)
-RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput
-RUN python manage.py create_admin
 
 # Start app with gunicorn
 CMD ["gunicorn", "grocery_project.wsgi:application", "--bind", "0.0.0.0:8000"]
