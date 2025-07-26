@@ -1,5 +1,5 @@
 # Use official Python image
-FROM python:3.11-slim
+FROM python:3.12
 
 # Install system packages including Tesseract
 RUN apt-get update && apt-get install -y \
