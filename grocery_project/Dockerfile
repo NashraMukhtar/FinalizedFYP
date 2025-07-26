@@ -22,10 +22,10 @@ RUN pip install -r requirements.txt
 
 # Collect static files (optional if using static)
 RUN mkdir -p static
-RUN python grocery_project/manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput
 
 # Run migrations
-RUN python grocery_project/manage.py migrate
+RUN python manage.py migrate
 
 # Start app with gunicorn
 CMD ["gunicorn", "grocery_project.wsgi:application", "--bind", "0.0.0.0:8000"]
