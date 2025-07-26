@@ -1,10 +1,9 @@
 services:
   - type: web
     name: grocery-backend
-    env: python
+    env: docker
     plan: free
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn grocery_project.wsgi:application"
+    dockerfilePath: Dockerfile
     envVars:
       - key: DATABASE_URL
         fromDatabase:
