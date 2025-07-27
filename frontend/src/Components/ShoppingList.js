@@ -214,7 +214,7 @@ const ShoppingList2 = () => {
                   marginRight: '30px',
                 }}
               >
-                Add Item
+                Add
               </Button>
               </Box>
             </Box>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, MenuItem, IconButton, Dialog, Button, Typography } from "@mui/material";
+import { Menu, MenuItem, IconButton, Dialog, Button, Typography, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { AccountCircle } from "@mui/icons-material";
 import "../App.css";
@@ -30,19 +30,18 @@ export default function UserNavbar() {
   };
 
   return (
-    <nav style={{ 
+    <Box sx={{ 
             display: "flex",
             justifyContent:"space-between",
             padding: "10px",
             position: "sticky", 
             top: 0, 
             zIndex: 1000, 
+            width: {xs:"90%",md:"100%"},
+            overflowX: 'hidden',
             }}>
-      {/* PROFILE DROPDOWN */}
-      <div style={{
-            gap: "18px",
-            display:"flex"
-            }}>
+      {/* LEFT SIDE OF NAVBAR, PROFILE DROPDOWN + TITLE */}
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginLeft:{xs:"-15px", md:"0px"} }}>
         <IconButton onClick={handleClick} size="large"
         sx={{
           color: "black", 
@@ -82,44 +81,35 @@ export default function UserNavbar() {
             Home
             </Button>
         </Link>
-        <Typography variant="h4" style={{color:"white", paddingTop:"20px", fontSize:"21px", paddingLeft:"50px", textShadow: "6px 6px 4px rgb(91, 87, 87)", fontFamily: "'Luckiest Guy', static",}}>
+        <Typography variant="h4" sx={{color:"white", paddingTop:"20px", fontSize:{xs:"15px",md:"21px"}, paddingLeft:{xs:"7px",md:"30px"}, textShadow: "6px 6px 4px rgb(91, 87, 87)", fontFamily: "'Luckiest Guy', static",}}>
           Grocery Management with Recipe Suggestion
         </Typography>
-      </div>
+      </Box>
       
-      {/* NAVIGATION BUTTONS */}
-      <div style={{
-            paddingTop:"10px", 
-            gap: "18px",
-            display:"flex",
-            }}>
+      {/* RIGHT SIDE OF NAVBAR, NAVIGATION BUTTONS + LOGO */}
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1}}>
 
-        {/* <Link to="/grocery-list" style={{textDecoration:"none",}}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexDirection:{xs:"column", sm:"row",md:"row"}, marginLeft:{xs:"10px",md:"-20px"}, paddingTop:{xs:"20px",md:"0px"}}}>
+          <Link to="/shopping-list" style={{textDecoration:"none",}}>
             <Button className={"button nav-btn"} sx={{border:"1px solid white",}}>
-                Grocery List
-            </Button>
-        </Link> */}
-        <Link to="/shopping-list" style={{textDecoration:"none",}}>
-            <Button className={"button nav-btn"} sx={{border:"1px solid white",}}>
-                Shopping List
+                Shopping
             </Button>
         </Link>
         <Link to="/all-recipes" style={{textDecoration:"none",}}>
             <Button className={"button nav-btn"} sx={{border:"1px solid white",}}>
-                All Recipes
+                Recipes
             </Button>
         </Link>
-        <div style={{ marginTop: "-5px", marginRight: "-30px"}}>
-          {/* <Link to="/home" style={{border: "1px solid black", backgroundColor:"black", padding: "2px"}}> */}
+        </Box>
+        <Box style={{ marginTop: "-5px", marginRight: "-30px"}}>
             <img 
               src="/Logo.png" 
               alt="Logo" 
               style={{ height: "55px", cursor: "pointer", border: "2px solid white",borderRadius:"50%" }}
             />
-          {/* </Link> */}
-        </div>
-      </div>
+        </Box>
+      </Box>
       
-    </nav>
+    </Box>
   );
 }

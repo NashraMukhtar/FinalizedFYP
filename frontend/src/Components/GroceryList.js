@@ -124,48 +124,59 @@ const GroceryList = () => {
       <Container
       maxWidth="false"
       className='gradient-bg'
-      style={{
-        margin: '-8px',
+      sx={{
+        // margin: '-8px',
+        width: '100%', overflowX: 'hidden'
       }}
     >
       <UserNavbar />
 
-      <ToastContainer 
+      <ToastContainer     
        autoClose={2000}
       />
 
       {/* HEADLINE */}
       <Typography variant="h2" className= "bouncing-txt" sx={{
-        fontFamily: "'Luckiest Guy', static",
-        color: "#ffffff",
-        width: "100%",
-        paddingTop: "45px",
-      }}>
+                  fontFamily: "'Luckiest Guy', static",
+                  color: "#ffffff",
+                  width: "100%",
+                  paddingTop: { xs: "20px", sm: "30px", md: "45px" },
+                  fontSize: { xs: "26px", sm: "34px", md: "48px" },
+                  textAlign: "center",
+                    }}>
         Your Available Items
       </Typography>
 
             {/*SUGGEST RECIPE BUTTON*/}
-            <Box sx={{marginLeft: '23%', marginBottom:2, textAlign: 'center', width: '55%'}}>
+            <Box sx={{
+                    marginLeft: { xs: 'auto', sm: '27%' },
+                    marginRight: { xs: 'auto', sm: '0' },
+                    marginBottom: 2,
+                    textAlign: 'center',
+                    width: { xs: '45%', sm: '45%', md: '45%' },
+                  }}>
               <Button
                 fullWidth
                 variant="contained"
                 startIcon={<RestaurantMenuIcon />}
                 sx={{
                   backgroundColor: '#ff3cac',
-                  backgroundImage: 'linear-gradient(225deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%)',
+                  backgroundImage:
+                    'linear-gradient(225deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%)',
                   color: '#fff',
-                  fontWeight: 'bold',
-                  fontSize: '1.1rem',
+                  fontWeight: { xs: '500', sm: 'bold' },
+                  fontSize: { xs: '0.9rem', sm: '1.05rem', md: '1.1rem' },
                   borderRadius: '16px',
-                  border: "1px solid white",
+                  border: '1px solid white',
                   boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.25)',
                   textTransform: 'none',
-                  padding: '10px 20px',
+                  padding: { xs: '5px 9px', sm: '10px 20px' },
                   transition: 'all 0.3s ease',
                   '&:hover': {
                     transform: 'scale(1.05)',
                     boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.35)',
-                    backgroundImage: 'linear-gradient(225deg, #ff0080 0%, #7928ca 50%, #2b86c5 100%)',
+                    backgroundImage:
+                      'linear-gradient(225deg, #ff0080 0%, #7928ca 50%, #2b86c5 100%)',
                   },
                 }}
                 onClick={() => navigate('/suggest-recipes')}
@@ -174,7 +185,7 @@ const GroceryList = () => {
               </Button>
             </Box>
       {/* SEARCHBAR, BUTTON, LIST */}
-      <Box sx={{width: '65%', marginLeft: '17%' }}>
+      <Box sx={{width: {xs:"50%", sm:"65%", md:"65%"}, marginLeft: {xs:"14", sm:"17%", md:"17%"} }}>
       
             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
               {/* UPLOAD BUTTON */}
@@ -223,7 +234,7 @@ const GroceryList = () => {
                       />
                     )}
                     fullWidth
-                    style={{ marginBottom: '15px', background: 'smokeWhite', width: '450px', }}
+                    sx={{ marginBottom: '15px', background: 'smokeWhite', width: {xs:"250px",sm:"350px",md:"450px"}, }}
                   />
 
                   {error && (
@@ -244,7 +255,7 @@ const GroceryList = () => {
                     marginRight: '30px',
                   }}
                 >
-                  Add Item
+                  Add
                 </Button>
                 </Box>
             </Box>
@@ -256,12 +267,12 @@ const GroceryList = () => {
 
             {/* GROCERY ITEMS LIST */}
                   {groceryItems.length > 0 ? (
-                    <Grid container spacing={3} sx={{ width: '1000px', marginLeft: '-140px', }}>
+                    <Grid container spacing={3} sx={{ width: { xs: '300px',sm:"600px", md: '1000px' }, marginLeft: { xs: '15px',sm:"-8%", md: '-140px' }, paddingX: { xs: '10px', sm: '20px' }, }}>
                     {groceryItems.map((item) => (
                       <Grid item xs={12} sm={6} md={4} key={item.id}>
                         <Card sx={{
                           border: '1px solid #8c8c8c',
-                          padding: '10px',
+                          padding: { xs: '6px', sm: '10px' },
                           transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
                           boxShadow: '0 0 0 rgba(0, 0, 0, 0)',
                           '&:hover': {
@@ -269,12 +280,15 @@ const GroceryList = () => {
                             boxShadow: '0px 10px 20px 3px rgba(236, 104, 133, 0.9)',
                           }
                         }}>
-                          <CardContent>
-                            <Typography variant="h5">{item.ingredient_name}</Typography>
+                          <CardContent sx={{ paddingBottom: '8px !important' }}>
+                            <Typography variant="h5" sx={{
+                              fontSize: { xs: '16px', sm: '18px', md: '20px' }, // smaller on small screens
+                              wordWrap: 'break-word',}}>
+                                {item.ingredient_name}</Typography>
                           </CardContent>
                           <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <IconButton onClick={() => handleOpenDialog(item)}>
-                              <Delete color="error" />
+                              <Delete color="error" sx={{ fontSize: { xs: '20px', sm: '24px' } }} />
                             </IconButton>
                           </CardActions>
                         </Card>

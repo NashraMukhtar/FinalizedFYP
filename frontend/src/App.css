@@ -1,8 +1,5 @@
 .gradient-bg {
     min-height: 100vh; 
-    /* Light one */
-    /* background: linear-gradient(135deg, #adc6eb, #f18ea3, #957ecd, #e7d27e); */
-    /* Dark one */
     background: url('BACK3.png'), linear-gradient(135deg, #8DB3E4, #EC6885, #8167C4, #E3CA65);
     background-size: contain;
     background-position: center;
@@ -116,3 +113,22 @@
     color: white;
     text-shadow: 2px 2px 4px rgba(50, 50, 50, 0.7);
   }
+
+
+  @media (max-width: 900px) {
+  .button {
+    font-size: 0.8rem;
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-btn {
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
+  }
+  .gradient-bg {
+    background-size: contain;
+    background-repeat: repeat-y;
+    background-attachment: scroll;
+  }
+}

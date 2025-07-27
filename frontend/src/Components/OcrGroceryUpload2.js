@@ -31,6 +31,7 @@ const OcrGroceryUpload2 = ({ open, onClose }) => {
   const handleClose = () => {
     resetStates();
     onClose(); // Let parent handle dialog state
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -86,15 +87,16 @@ const OcrGroceryUpload2 = ({ open, onClose }) => {
     }
   
     try {
+      console.log("Ingredient being sent:", ingredient);
       const res = await groceryAPI.addGroceryItem({ ingredient: ingredient.id }, token);
   
-      if (res.status === 201) {
+      if (res) {
         toast.success(`"${item.match}" added to grocery list`);
         setAddedItems((prev) => [...prev, matchName]);
         setMatched((prev) => prev.filter((i) => i.match.toLowerCase() !== matchName));
       }
     } catch (err) {
-      console.error(err);
+      console.error("Add failed",err);
       setErrorItems((prev) => [...prev, matchName]);
   
       if (err.response?.status === 400) {
