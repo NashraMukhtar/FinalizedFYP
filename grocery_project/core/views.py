@@ -112,7 +112,7 @@ class OCRGroceryExtractView(APIView):
 
         # OCR image
         image = Image.open(image_file)
-        pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+        # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
         raw_text = pytesseract.image_to_string(image)
 
         # Preprocess extracted lines
