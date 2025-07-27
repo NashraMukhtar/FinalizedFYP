@@ -90,6 +90,7 @@ const authAPI = {
         const res = await Axios.post(`${API_URL}core/extract-grocery/`, formData, {
           headers: {
             Authorization: `Token ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         });
         return res.data;
