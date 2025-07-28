@@ -41,9 +41,10 @@ const Login = () => {
     <Container
     maxWidth="false"
     className='gradient-bg'
-    style={{
-      margin: '-8px',
-    }}
+    sx={{
+            // margin: '-8px',
+            width: '100%', overflowX: 'hidden'
+        }}
     >
       <Container
       maxWidth ="xs"

@@ -18,8 +18,8 @@ import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import { Autocomplete } from '@mui/material';
 import UserNavbar from './UserNavbar';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog';
-import { Image as ImageIcon } from 'lucide-react';
-import OcrGroceryUpload2 from './OcrGroceryUpload2';
+// import { Image as ImageIcon } from 'lucide-react';
+// import OcrGroceryUpload2 from './OcrGroceryUpload2';
 
 const GroceryList = () => {
     const [groceryItems, setGroceryItems] = useState([]);
@@ -30,7 +30,7 @@ const GroceryList = () => {
     const [error, setError] = useState('');
     const [openDialog, setOpenDialog] = useState(false);  // State for dialog
     const [itemToDelete, setItemToDelete] = useState(null);
-    const [openOcrDialog, setOpenOcrDialog] = useState(false);
+    // const [openOcrDialog, setOpenOcrDialog] = useState(false);
 
     // Fetch grocery items on component mount
     useEffect(() => {
@@ -189,7 +189,7 @@ const GroceryList = () => {
       
             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
               {/* UPLOAD BUTTON */}
-                <Box>
+                {/* <Box>
                   <Button
                     variant="contained"
                     startIcon={<ImageIcon />}
@@ -215,7 +215,7 @@ const GroceryList = () => {
                     }}
                   >
                   </Button>
-                </Box>
+                </Box> */}
                 {/* SEARCH BAR */}
                 <Box>
                   <Autocomplete
@@ -259,10 +259,10 @@ const GroceryList = () => {
                 </Button>
                 </Box>
             </Box>
-            <OcrGroceryUpload2
+            {/* <OcrGroceryUpload2
               open={openOcrDialog}
               onClose={() => setOpenOcrDialog(false)}
-            />
+            /> */}
 
 
             {/* GROCERY ITEMS LIST */}

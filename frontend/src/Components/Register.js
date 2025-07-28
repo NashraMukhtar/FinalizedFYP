@@ -29,11 +29,10 @@ const Register = ({ toggleRegister }) => {
   return (
     <Container
     maxWidth ="xs"
-    style={{
-      padding: '30px',
-      borderRadius: '25px',
-      minHeight: '500px',
-    }}
+    sx={{
+            // margin: '-8px',
+            width: '100%', overflowX: 'hidden'
+        }}
     >
       <ToastContainer />
       <Typography 

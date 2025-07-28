@@ -151,8 +151,9 @@ const ShoppingList2 = () => {
       <Container
       maxWidth="false"
       className='gradient-bg'
-      style={{
-        margin: '-8px',
+      sx={{
+        // margin: '-8px',
+        width: '100%', overflowX: 'hidden'
       }}
     >
       <UserNavbar />
@@ -173,7 +174,7 @@ const ShoppingList2 = () => {
       </Typography>
 
       {/* SEARCHBAR, BUTTON, LIST */}
-      <Box sx={{width: '55%', marginLeft: '20%', marginTop: '3%', }}>
+      <Box sx={{width: {xs:"50%", sm:"55%", md:"55%"}, marginLeft: {xs:"14", sm:"17%", md:"20%"}, marginTop: '3%', }}>
             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
               {/* SEARCHBAR */}
                 <Box>
@@ -193,7 +194,7 @@ const ShoppingList2 = () => {
                       />
                     )}
                     fullWidth
-                    style={{ marginBottom: '15px', background: 'smokeWhite', width: '450px', }}
+                    sx={{ marginBottom: '15px', background: 'smokeWhite', width: {xs:"250px",sm:"350px",md:"450px"}, }}
                   />
 
                   {error && (
@@ -221,19 +222,30 @@ const ShoppingList2 = () => {
 
             {/* SHOPPING ITEMS GRID */}
                   {shoppingItems.length > 0 ? (
-                    <Grid container spacing={3} sx={{ width: '1000px', marginLeft: '-140px', }}>
+                    <Grid container spacing={3} sx={{ width: { xs: '300px',sm:"600px", md: '1000px' }, marginLeft: { xs: '15px',sm:"-8%", md: '-140px' }, paddingX: { xs: '10px', sm: '20px' }, }}>
                     {shoppingItems.map((item) => (
                       <Grid item xs={12} sm={6} md={4} key={item.id}>
-                        <Card className="cards">
-                          <CardContent>
-                            <Typography variant="h5">{item.ingredient_name}</Typography>
+                        <Card sx={{
+                          border: '1px solid #8c8c8c',
+                          padding: { xs: '6px', sm: '10px' },
+                          transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                          boxShadow: '0 0 0 rgba(0, 0, 0, 0)',
+                          '&:hover': {
+                            transform: 'scale(1.05)',
+                            boxShadow: '0px 10px 20px 3px rgba(236, 104, 133, 0.9)',
+                          }
+                        }}>
+                          <CardContent sx={{ paddingBottom: '8px !important' }}>
+                            <Typography variant="h5" sx={{
+                              fontSize: { xs: '16px', sm: '18px', md: '20px' }, // smaller on small screens
+                              wordWrap: 'break-word',}}>{item.ingredient_name}</Typography>
                           </CardContent>
                           <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <IconButton onClick={() => handleMoveToGrocery(item.id)}>
                               <ShoppingCart color="primary" />
                             </IconButton>
                             <IconButton onClick={() => handleOpenDialog(item)}>
-                              <Delete color="error" />
+                              <Delete color="error" sx={{ fontSize: { xs: '20px', sm: '24px' } }}/>
                             </IconButton>
                           </CardActions>
                         </Card>

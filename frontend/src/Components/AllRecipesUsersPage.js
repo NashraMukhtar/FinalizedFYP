@@ -102,8 +102,9 @@ const AllRecipes = () => {
         <Container 
         maxWidth="false"
         className='gradient-bg'
-        style={{
-            margin: '-8px',
+        sx={{
+            // margin: '-8px',
+            width: '100%', overflowX: 'hidden'
         }}
         >
             <UserNavbar />
@@ -124,27 +125,35 @@ const AllRecipes = () => {
             </Typography>
 
             {/*REQUEST RECIPE BUTTON*/}
-            <Box sx={{marginLeft: '35%', marginBottom:2, textAlign: 'center', width: '30%'}}>
+            <Box sx={{
+                    marginLeft: { xs: 'auto', sm: '27%' },
+                    marginRight: { xs: 'auto', sm: '0' },
+                    marginBottom: 2,
+                    textAlign: 'center',
+                    width: { xs: '45%', sm: '45%', md: '45%' },
+                  }}>
               <Button
                 fullWidth
                 variant="contained"
                 startIcon={<RestaurantMenuIcon />}
                 sx={{
                   backgroundColor: '#ff3cac',
-                  backgroundImage: 'linear-gradient(225deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%)',
+                  backgroundImage:
+                    'linear-gradient(225deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%)',
                   color: '#fff',
-                  fontWeight: 'bold',
-                  fontSize: '1.1rem',
+                  fontWeight: { xs: '500', sm: 'bold' },
+                  fontSize: { xs: '0.9rem', sm: '1.05rem', md: '1.1rem' },
                   borderRadius: '16px',
-                  border: "1px solid white",
+                  border: '1px solid white',
                   boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.25)',
                   textTransform: 'none',
-                  padding: '10px 20px',
+                  padding: { xs: '5px 9px', sm: '10px 20px' },
                   transition: 'all 0.3s ease',
                   '&:hover': {
                     transform: 'scale(1.05)',
                     boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.35)',
-                    backgroundImage: 'linear-gradient(225deg, #ff0080 0%, #7928ca 50%, #2b86c5 100%)',
+                    backgroundImage:
+                      'linear-gradient(225deg, #ff0080 0%, #7928ca 50%, #2b86c5 100%)',
                   },
                 }}
                 onClick={() => setOpenRecipeDialog(true)}
